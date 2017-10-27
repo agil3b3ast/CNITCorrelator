@@ -36,12 +36,11 @@ class EntryLevelCorrelator(Plugin):
           print("Hello from {}".format(self.__class__.__name__))
           print(ctx.get("alert.classification.text"))
           #reset counter to a new correlation period, but maybe not necessary because when a ctx is destroyed the counter is reset
-          #time_now = time.time()
-          ctx_copy = ctx
-          ctx.destroy()
-          ctx_copy.alert()
+          #ctx_copy = ctx
+          #ctx.destroy()
+          #ctx_copy.alert()
+          ctx.resetCount()
           print("{} Alert finished".format(self.__class__.__name__))
-          #print(idmef)
-          del ctx_copy
+          #del ctx_copy
         else:
           time_now = time.time()
