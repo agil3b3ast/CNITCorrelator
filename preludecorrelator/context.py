@@ -111,6 +111,7 @@ class AnalyzerContents(object):
         list_attr = idmef.get("alert.analyzer(*)")
         print list_attr
         len_list_attr = len(list_attr)
+        len_list_attr = 1
         for a in range(len_list_attr):
             analyzer_num = "alert.analyzer({})".format(a)
             idmef_to_save = IDMEF()
