@@ -222,7 +222,7 @@ class Context(IDMEF, Timer):
     def alert(self):
         #saving analyzerid
         analyzerid = self.get("alert.analyzer(0).analyzerid")
-        super(IDMEF, self).alert()
+        super(Context, self).alert()
         #restoring analyzerid
         self.set("alert.analyzer(0).analyzerid", analyzerid)
         # destroy context
