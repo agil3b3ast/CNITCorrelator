@@ -117,13 +117,15 @@ class AnalyzerContents(object):
         for a in range(len_list_attr):
             analyzer_num = "alert.analyzer({})".format(a)
             dest.set("alert.analyzer(>>).analyzerid",source.get("{}.analyzerid".format(analyzer_num)))
+            dest.set("alert.analyzer(-1).name",source.get("{}.name".format(analyzer_num)))
+
             for att in self.attributes:
                 to_set = list_attr[a].get(att)
                 print(analyzer_num)
                 print(att)
                 print to_set
                 if to_set is not None:
-                    dest.set("alert.analyzer(-1).{}".format(analyzer_num,att), to_set)
+                    dest.set("alert.analyzer(-1).{}".format(att), to_set)
 
 
     def restoreAnalyzerContents(self, idmef):
