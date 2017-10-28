@@ -111,7 +111,6 @@ class AnalyzerContents(object):
         list_attr = idmef.get("alert.analyzer(*)")
         print list_attr
         len_list_attr = len(list_attr)
-        len_list_attr = 1
         for a in range(len_list_attr):
             analyzer_num = "alert.analyzer({})".format(a)
             idmef_to_save = IDMEF()
@@ -121,7 +120,6 @@ class AnalyzerContents(object):
                 print(att)
                 print to_set
                 if to_set is not None:
-
                     idmef_to_save.set("{}.{}".format(analyzer_num,att), to_set)
 
             self.analyzers.append(idmef_to_save)
@@ -261,9 +259,10 @@ class Context(IDMEF, Timer):
     def alert(self):
         #print(self._lastIDMEF)
         #saving analyzerid
-        #analyzerid = self._lastIDMEF.get("alert.analyzer(0).analyzerid")
-        tmp_analyzer = AnalyzerContents()
-        tmp_analyzer.saveAnalyzerContents(self._lastIDMEF)
+        analyzerid = self._lastIDMEF.get("alert.analyzer(0).analyzerid")
+        analyzerid2 = self._lastIDMEF.get("alert.analyzer(1).analyzerid")
+        #tmp_analyzer = AnalyzerContents()
+        #tmp_analyzer.saveAnalyzerContents(self._lastIDMEF)
         #print(self)
         #print("############")
         #The context must be destroyed before because we cannot permit that a plugin receives
@@ -272,8 +271,10 @@ class Context(IDMEF, Timer):
         #To maintain window persistance we could create another context and assign the old window
         super(Context, self).alert()
         #restoring analyzerid
-        #self._lastIDMEF.set("alert.analyzer(0).analyzerid", analyzerid)
-        tmp_analyzer.restoreAnalyzerContents(self._lastIDMEF)
+        self._lastIDMEF.set("alert.analyzer(0).analyzerid", analyzerid)
+        if analyzerid2 is not None:
+            self._lastIDMEF.set("alert.analyzer(1).analyzerid", analyzerid2)
+        #tmp_analyzer.restoreAnalyzerContents(self._lastIDMEF)
         #cannot just reset update count because the alert continue to add
         #so the context must be removed from the context table
         print(self)
