@@ -100,10 +100,36 @@ class Timer:
     def reset(self):
         self.start()
 
-class HeaderContent(object):
+class AnalyzerContents(object):
 
-    def getHeader(self):
-        pass
+    def __init__(self, attributes=None):
+        self.analyzers = []
+        if attributes is None:
+            self.attributes = ["analyzerid","name","manufacturer","model","version","class","ostype","osversion","node.category","node.name","process.name","process.pid","process.path"]
+
+    def saveAnalyzerContents(self, idmef):
+        list_attr = idmef.get("alert.analyzer(*)")
+        for a in range(list_attr):
+            analyzer_num = "alert.analyzer({})".format(a)
+            idmef_to_save = IDMEF()
+            for att in self.attributes:
+                to_set = list_attr[a].get(att)
+                if to_set is not None:
+                    idmef_to_save.set("{}.{}".format(analyzer_num,att), to_set)
+
+            self.analyzers.append(idmef_to_save)
+
+    def restoreAnalyzerContents(self, idmef):
+
+        for a in range(self.analyzers):
+            analyzer_num = "alert.analyzer({})".format(a)
+
+            for att in self.attributes:
+                to_set = self.analyzers[a].get(att)
+                if to_set is not None:
+                    idmef.set("{}.{}".format(analyzer_num,att), to_set)
+
+
 
 
 class Context(IDMEF, Timer):
@@ -226,17 +252,18 @@ class Context(IDMEF, Timer):
 
     def alert(self):
         #saving analyzerid
-        analyzerid = self.get("alert.analyzer(0).analyzerid")
-        print(self.get("alert"))
-        print("##############")
-        print(self)
+        #analyzerid = self.get("alert.analyzer(0).analyzerid")
+        tmp_analyzer = AnalyzerContents()
+        tmp_analyzer.saveAnalyzerContents(self)
         super(Context, self).alert()
-        print(self)
         #restoring analyzerid
-        self.set("alert.analyzer(0).analyzerid", analyzerid)
+        #self.set("alert.analyzer(0).analyzerid", analyzerid)
+        tmp_analyzer.restoreAnalyzerContents(self)
         #cannot just reset update count because the alert continue to add
         #so the context must be removed from the context table
+        print(self)
         self.destroy()
+        del tmp_analyzer
 
     def merge(self, ctx):
         self._update_count += ctx._update_count
