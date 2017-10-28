@@ -87,7 +87,7 @@ class IDMEF(prelude.IDMEF):
         global prelude_client
 
         self.set("alert.create_time", prelude.IDMEFTime())
-        
+
         prelude_client.correlationAlert(self)
 
     def _getMergeList(self, path, idmef):

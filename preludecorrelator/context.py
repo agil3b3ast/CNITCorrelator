@@ -160,6 +160,7 @@ class Context(IDMEF, Timer):
 
         if isinstance(idmef, IDMEF):
             self.addAlertReference(idmef)
+            self._lastIDMEF = idmef
 
         t = self._getTime(idmef)
         self._time_min = t - self._options["expire"]
@@ -251,22 +252,22 @@ class Context(IDMEF, Timer):
     def getWindowHelper(self):
         return self._windowHelper
 
-    def alert(self, idmefToSpread=None):
-        if idmefToSpread is not None:
-            #saving analyzerid
-            #analyzerid = self.get("alert.analyzer(0).analyzerid")
-            tmp_analyzer = AnalyzerContents()
-            tmp_analyzer.saveAnalyzerContents(idmefToSpread)
-            #print(self)
-            #print("############")
+    def alert(self):
+
+        #saving analyzerid
+        #analyzerid = self.get("alert.analyzer(0).analyzerid")
+        tmp_analyzer = AnalyzerContents()
+        tmp_analyzer.saveAnalyzerContents(self._lastIDMEF)
+        #print(self)
+        #print("############")
         super(Context, self).alert()
-        if idmefToSpread is not None:
-            #restoring analyzerid
-            #self.set("alert.analyzer(0).analyzerid", analyzerid)
-            tmp_analyzer.restoreAnalyzerContents(idmefToSpread)
-            #cannot just reset update count because the alert continue to add
-            #so the context must be removed from the context table
-            print(self)
+        #restoring analyzerid
+        #self.set("alert.analyzer(0).analyzerid", analyzerid)
+        tmp_analyzer.restoreAnalyzerContents(self._lastIDMEF)
+        #cannot just reset update count because the alert continue to add
+        #so the context must be removed from the context table
+        print(self)
+
         self.destroy()
 
     def merge(self, ctx):
@@ -318,6 +319,7 @@ class Context(IDMEF, Timer):
 
         if idmef:
             self.addAlertReference(idmef)
+            self._lastIDMEF = idmef
 
         if timer_rst and self.running():
             self.reset()
