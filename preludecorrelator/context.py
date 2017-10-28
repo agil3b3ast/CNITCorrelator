@@ -216,7 +216,7 @@ class Context(IDMEF, Timer):
     def setWindowHelper(self, windowHelper):
         self._windowHelper = windowHelper(self)
 
-    def getWindowHelper(self, windowHelper):
+    def getWindowHelper(self):
         return self._windowHelper
 
     def alert(self):
