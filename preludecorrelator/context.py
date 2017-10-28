@@ -256,6 +256,8 @@ class Context(IDMEF, Timer):
         #analyzerid = self.get("alert.analyzer(0).analyzerid")
         tmp_analyzer = AnalyzerContents()
         tmp_analyzer.saveAnalyzerContents(self)
+        print(self)
+        print("#################################")
         super(Context, self).alert()
         #restoring analyzerid
         #self.set("alert.analyzer(0).analyzerid", analyzerid)
