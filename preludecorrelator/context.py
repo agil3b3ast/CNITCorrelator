@@ -253,15 +253,15 @@ class Context(IDMEF, Timer):
 
     def alert(self):
         #saving analyzerid
-        #analyzerid = self.get("alert.analyzer(0).analyzerid")
-        tmp_analyzer = AnalyzerContents()
-        tmp_analyzer.saveAnalyzerContents(self)
+        analyzerid = self.get("alert.analyzer(0).analyzerid")
+        #tmp_analyzer = AnalyzerContents()
+        #tmp_analyzer.saveAnalyzerContents(self)
         print(self)
         print("############")
         super(Context, self).alert()
         #restoring analyzerid
-        #self.set("alert.analyzer(0).analyzerid", analyzerid)
-        tmp_analyzer.restoreAnalyzerContents(self)
+        self.set("alert.analyzer(0).analyzerid", analyzerid)
+        #tmp_analyzer.restoreAnalyzerContents(self)
         #cannot just reset update count because the alert continue to add
         #so the context must be removed from the context table
         print(self)
