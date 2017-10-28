@@ -269,6 +269,10 @@ class Context(IDMEF, Timer):
         #IDMEF when the context is already active, we would have inconsistency
         self.destroy()
         #To maintain window persistance we could create another context and assign the old window
+        print("#BEFORE ALERT#")
+        print(analyzerid)
+        print(analyzerid2)
+
         super(Context, self).alert()
         #restoring analyzerid
         self._lastIDMEF.set("alert.analyzer(0).analyzerid", analyzerid)
