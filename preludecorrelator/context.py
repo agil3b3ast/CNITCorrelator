@@ -100,6 +100,11 @@ class Timer:
     def reset(self):
         self.start()
 
+class HeaderContent(object):
+
+    def getHeader(self):
+        pass
+
 
 class Context(IDMEF, Timer):
     FORMAT_VERSION = 0.2
@@ -222,7 +227,11 @@ class Context(IDMEF, Timer):
     def alert(self):
         #saving analyzerid
         analyzerid = self.get("alert.analyzer(0).analyzerid")
+        print(self.get("alert"))
+        print("##############")
+        print(self)
         super(Context, self).alert()
+        print(self)
         #restoring analyzerid
         self.set("alert.analyzer(0).analyzerid", analyzerid)
         #cannot just reset update count because the alert continue to add
