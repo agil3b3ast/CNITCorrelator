@@ -109,6 +109,7 @@ class AnalyzerContents(object):
 
     def saveAnalyzerContents(self, idmef):
         list_attr = idmef.get("alert.analyzer(*)")
+        print list_attr
         len_list_attr = len(list_attr)
         for a in range(len_list_attr):
             analyzer_num = "alert.analyzer({})".format(a)
