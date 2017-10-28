@@ -109,7 +109,8 @@ class AnalyzerContents(object):
 
     def saveAnalyzerContents(self, idmef):
         list_attr = idmef.get("alert.analyzer(*)")
-        for a in range(list_attr):
+        len_list_attr = len(list_attr)
+        for a in range(len_list_attr):
             analyzer_num = "alert.analyzer({})".format(a)
             idmef_to_save = IDMEF()
             for att in self.attributes:
@@ -120,8 +121,8 @@ class AnalyzerContents(object):
             self.analyzers.append(idmef_to_save)
 
     def restoreAnalyzerContents(self, idmef):
-
-        for a in range(self.analyzers):
+        len_analyzers = len(self.analyzers)
+        for a in range(len_analyzers):
             analyzer_num = "alert.analyzer({})".format(a)
 
             for att in self.attributes:
