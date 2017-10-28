@@ -107,40 +107,24 @@ class AnalyzerContents(object):
         if attributes is None:
             self.attributes = ["name","manufacturer","model","version","class","ostype","osversion","node.category","node.name","process.name","process.pid","process.path"]
 
-    def saveAnalyzerContents(self, idmef):
-        self.copyAnalyzers(idmef, self.analyzers)
-
     def copyAnalyzers(self, source, dest):
         list_attr = source.get("alert.analyzer(*)")
-        print list_attr
         len_list_attr = len(list_attr)
         for a in range(len_list_attr):
             analyzer_num = "alert.analyzer({})".format(a)
-            dest.set("alert.analyzer(>>).analyzerid",source.get("{}.analyzerid".format(analyzer_num)))
-            dest.set("alert.analyzer(-1).name",source.get("{}.name".format(analyzer_num)))
+            dest.set("alert.analyzer({}).analyzerid".format(analyzer_num),source.get("{}.analyzerid".format(analyzer_num)))
 
             for att in self.attributes:
                 to_set = list_attr[a].get(att)
-                print(analyzer_num)
-                print(att)
-                print to_set
                 if to_set is not None:
-                    dest.set("alert.analyzer(-1).{}".format(att), to_set)
+                    dest.set("alert.analyzer({}).{}".format(analyzer_num,att), to_set)
+
+    def saveAnalyzerContents(self, idmef):
+        self.copyAnalyzers(idmef, self.analyzers)
 
 
     def restoreAnalyzerContents(self, idmef):
         self.copyAnalyzers(self.analyzers, idmef)
-        '''
-        len_analyzers = len(self.analyzers)
-        for a in range(len_analyzers):
-            analyzer_num = "alert.analyzer({})".format(a)
-
-            for att in self.attributes:
-                to_set = self.analyzers[a].get(att)
-                if to_set is not None:
-                    idmef.set("{}.{}".format(analyzer_num,att), to_set)
-        '''
-
 
 
 class Context(IDMEF, Timer):
