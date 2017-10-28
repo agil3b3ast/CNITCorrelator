@@ -112,12 +112,12 @@ class AnalyzerContents(object):
         len_list_attr = len(list_attr)
         for a in range(len_list_attr):
             analyzer_num = "alert.analyzer({})".format(a)
-            dest.set("alert.analyzer({}).analyzerid".format(analyzer_num),source.get("{}.analyzerid".format(analyzer_num)))
+            dest.set("{}.analyzerid".format(analyzer_num),source.get("{}.analyzerid".format(analyzer_num)))
 
             for att in self.attributes:
                 to_set = list_attr[a].get(att)
                 if to_set is not None:
-                    dest.set("alert.analyzer({}).{}".format(analyzer_num,att), to_set)
+                    dest.set("{}.{}".format(analyzer_num,att), to_set)
 
     def saveAnalyzerContents(self, idmef):
         self.copyAnalyzers(idmef, self.analyzers)
