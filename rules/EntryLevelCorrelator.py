@@ -3,7 +3,6 @@ from preludecorrelator.idmef import IDMEF
 from preludecorrelator.context import Context
 from preludecorrelator.context import search as context_search
 from preludecorrelator.windows.WeakWindowHelper import WeakWindowHelper
-import time
 
 LEVEL = 1
 print("{}, {} Level Correlation".format("EntryLevelCorrelator", LEVEL))

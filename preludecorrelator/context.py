@@ -225,7 +225,8 @@ class Context(IDMEF, Timer):
         super(Context, self).alert()
         #restoring analyzerid
         self.set("alert.analyzer(0).analyzerid", analyzerid)
-        # destroy context
+        #cannot just reset update count because the alert continue to add
+        #so the context must be removed from the context table
         self.destroy()
 
     def merge(self, ctx):
