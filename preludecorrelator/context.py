@@ -263,6 +263,7 @@ class Context(IDMEF, Timer):
         #The context must be destroyed before because we cannot permit that a plugin receives
         #IDMEF when the context is already active, we would have inconsistency
         self.destroy()
+        #To maintain window persistance we could create another context and assign the old window
         super(Context, self).alert()
         #restoring analyzerid
         #self._lastIDMEF.set("alert.analyzer(0).analyzerid", analyzerid)
