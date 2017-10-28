@@ -1,5 +1,5 @@
 import time
-from preludecorrelator.windowhelper import WindowHelper
+from ..windowhelper import WindowHelper
 
 class WeakWindowHelper(WindowHelper):
 
