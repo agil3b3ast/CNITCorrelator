@@ -31,5 +31,5 @@ class EntryLevelCorrelator13(Plugin):
         if ctx.getWindowHelper().checkCorrelationWindow():
           print("Hello from {}".format(self.__class__.__name__))
           print(ctx.get("alert.classification.text"))
-          ctx.alert()
+          ctx.alert(idmefToSpread=idmef)
           print("{} Alert finished".format(self.__class__.__name__))

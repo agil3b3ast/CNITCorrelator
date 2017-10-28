@@ -36,5 +36,5 @@ class AdvancedLevelCorrelator(Plugin):
         if ctx.getWindowHelper().checkCorrelationWindow():
           print("Hello from %s" % self.__class__.__name__)
           print(ctx.get("alert.classification.text"))
-          ctx.alert()
+          ctx.alert(idmefToSpread=idmef)
           print("Alert Finished AdvancedLevelCorrelator")
