@@ -115,6 +115,8 @@ class AnalyzerContents(object):
             idmef_to_save = IDMEF()
             for att in self.attributes:
                 to_set = list_attr[a].get(att)
+                print(analyzer_num)
+                print(att)
                 if to_set is not None:
                     idmef_to_save.set("{}.{}".format(analyzer_num,att), to_set)
 
