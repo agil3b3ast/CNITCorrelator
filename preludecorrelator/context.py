@@ -103,28 +103,32 @@ class Timer:
 class AnalyzerContents(object):
 
     def __init__(self, attributes=None):
-        self.analyzers = []
+        self.analyzers = IDMEF()
         if attributes is None:
-            self.attributes = ["analyzerid","name","manufacturer","model","version","class","ostype","osversion","node.category","node.name","process.name","process.pid","process.path"]
+            self.attributes = ["name","manufacturer","model","version","class","ostype","osversion","node.category","node.name","process.name","process.pid","process.path"]
 
     def saveAnalyzerContents(self, idmef):
-        list_attr = idmef.get("alert.analyzer(*)")
+        self.copyAnalyzers(idmef, self.analyzers)
+
+    def copyAnalyzers(self, source, dest):
+        list_attr = source.get("alert.analyzer(*)")
         print list_attr
         len_list_attr = len(list_attr)
         for a in range(len_list_attr):
             analyzer_num = "alert.analyzer({})".format(a)
-            idmef_to_save = IDMEF()
+            dest.set("alert.analyzer(>>).analyzerid",idmef.get("{}.analyzerid".format(analyzer_num)))
             for att in self.attributes:
                 to_set = list_attr[a].get(att)
                 print(analyzer_num)
                 print(att)
                 print to_set
                 if to_set is not None:
-                    idmef_to_save.set("{}.{}".format(analyzer_num,att), to_set)
+                    dest.set("alert.analyzer(-1).{}".format(analyzer_num,att), to_set)
 
-            self.analyzers.append(idmef_to_save)
 
     def restoreAnalyzerContents(self, idmef):
+        self.copyAnalyzers(self.analyzers, idmef)
+        '''
         len_analyzers = len(self.analyzers)
         for a in range(len_analyzers):
             analyzer_num = "alert.analyzer({})".format(a)
@@ -133,7 +137,7 @@ class AnalyzerContents(object):
                 to_set = self.analyzers[a].get(att)
                 if to_set is not None:
                     idmef.set("{}.{}".format(analyzer_num,att), to_set)
-
+        '''
 
 
 
@@ -260,18 +264,17 @@ class Context(IDMEF, Timer):
         #print(self._lastIDMEF)
         #saving analyzerid
         analyzerid = self._lastIDMEF.get("alert.analyzer(0).analyzerid")
-        analyzerid2 = self._lastIDMEF.get("alert.analyzer(1).analyzerid")
-        #tmp_analyzer = AnalyzerContents()
-        #tmp_analyzer.saveAnalyzerContents(self._lastIDMEF)
+        tmp_analyzer = AnalyzerContents()
+        tmp_analyzer.saveAnalyzerContents(self._lastIDMEF)
         #print(self)
         #print("############")
         #The context must be destroyed before because we cannot permit that a plugin receives
         #IDMEF when the context is already active, we would have inconsistency
         self.destroy()
         #To maintain window persistance we could create another context and assign the old window
-        print("#BEFORE ALERT#")
-        print(analyzerid)
-        print(analyzerid2)
+        #print("#BEFORE ALERT#")
+        #print(analyzerid)
+        #print(analyzerid2)
 
         super(Context, self).alert()
         #restoring analyzerid
