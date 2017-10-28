@@ -116,7 +116,7 @@ class AnalyzerContents(object):
         len_list_attr = len(list_attr)
         for a in range(len_list_attr):
             analyzer_num = "alert.analyzer({})".format(a)
-            dest.set("alert.analyzer(>>).analyzerid",idmef.get("{}.analyzerid".format(analyzer_num)))
+            dest.set("alert.analyzer(>>).analyzerid",source.get("{}.analyzerid".format(analyzer_num)))
             for att in self.attributes:
                 to_set = list_attr[a].get(att)
                 print(analyzer_num)
