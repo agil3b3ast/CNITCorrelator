@@ -140,7 +140,10 @@ suits your needs.
         ],
 
         'preludecorrelator.plugins': [
-        ]
+        ],
+        'preludecorrelator.windows': [
+
+        ],
     },
 
     package_data={},

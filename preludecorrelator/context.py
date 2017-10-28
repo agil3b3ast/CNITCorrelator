@@ -108,7 +108,7 @@ class Context(IDMEF, Timer):
         IDMEF.__setstate__(self, dict)
         Timer.__setstate__(self, dict)
 
-    def __init__(self, name, options={}, overwrite=True, update=False, idmef=None):
+    def __init__(self, name, options={}, overwrite=True, update=False, idmef=None, windowHelper=None):
         already_initialized = (update or (overwrite is False)) and hasattr(self, "_name")
         if already_initialized is True:
             return
@@ -142,6 +142,9 @@ class Context(IDMEF, Timer):
 
         _CONTEXT_TABLE[name].append(self)
         logger.debug("[add]%s", self.getStat(), level=3)
+
+        if windowHelper is not None:
+            self._windowHelper = windowHelper(self)
 
         x = self._mergeIntersect(debug=False)
         if x > 0:
@@ -209,6 +212,21 @@ class Context(IDMEF, Timer):
                 return True
 
         return False
+
+    def setWindowHelper(self, windowHelper):
+        self._windowHelper = windowHelper(self)
+
+    def getWindowHelper(self, windowHelper):
+        return self._windowHelper
+
+    def alert(self):
+        #saving analyzerid
+        analyzerid = self.get("alert.analyzer(0).analyzerid")
+        super(IDMEF, self).alert()
+        #restoring analyzerid
+        self.set("alert.analyzer(0).analyzerid", analyzerid)
+        # destroy context
+        self.destroy()
 
     def merge(self, ctx):
         self._update_count += ctx._update_count

@@ -52,12 +52,11 @@ class AdvancedLevelCorrelator(Plugin):
          if ctx.getUpdateCount() >= ctx.getOptions()["threshold"] - 1:
           print("Hello from %s" % self.__class__.__name__)
           print(ctx.get("alert.classification.text"))
-          #reset counter to a new correlation period
-          #time_now = time.time()
-          ctx.resetCount()
-          self.save_msg(idmef)
+          #self.save_msg(idmef)
+          #cannot just reset update count because the alert continue to add
+          #so the context must be removed from the context table
           ctx.alert()
-          self.restore_msg(idmef)
-          print("Alert Finished MyFourthPlugin")
+          #self.restore_msg(idmef)
+          print("Alert Finished AdvancedLevelCorrelator")
          else:
           time_now = time.time()

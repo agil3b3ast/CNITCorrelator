@@ -49,7 +49,6 @@ class Plugin(object):
     def run(self, idmef):
         pass
 
-
 class PluginDependenciesError(ImportError):
      pass
 
@@ -86,7 +85,7 @@ class PluginManager(object):
                 continue
 
             plugin_class = fct(e)
-            
+
             if plugin_class is None:
                 continue
 
