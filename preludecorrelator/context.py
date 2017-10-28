@@ -280,10 +280,10 @@ class Context(IDMEF, Timer):
 
         super(Context, self).alert()
         #restoring analyzerid
-        self._lastIDMEF.set("alert.analyzer(0).analyzerid", analyzerid)
-        if analyzerid2 is not None:
-            self._lastIDMEF.set("alert.analyzer(1).analyzerid", analyzerid2)
-        #tmp_analyzer.restoreAnalyzerContents(self._lastIDMEF)
+        #self._lastIDMEF.set("alert.analyzer(0).analyzerid", analyzerid)
+        #if analyzerid2 is not None:
+        #    self._lastIDMEF.set("alert.analyzer(1).analyzerid", analyzerid2)
+        tmp_analyzer.restoreAnalyzerContents(self._lastIDMEF)
         #cannot just reset update count because the alert continue to add
         #so the context must be removed from the context table
         print(self)
