@@ -22,6 +22,7 @@ class AdvancedLevelCorrelator22(Plugin):
 
         print("{} received correlation".format(self.__class__.__name__))
         print(corr_name)
+        print(idmef)
 
         ctx = context_search( context_id)
         if ctx is None:
