@@ -17,7 +17,7 @@ class EntryLevelCorrelator(Plugin):
          return
 
         if context_search(context_id) is None:
-         ctx = Context(context_id, { "expire": 5, "threshold": 5, "window" : 1 ,"alert_on_expire": False }, update = False, idmef=idmef, windowhelper=WeakWindowHelper)
+         ctx = Context(context_id, { "expire": 5, "threshold": 5, "window" : 1 ,"alert_on_expire": False }, update = False, idmef=idmef, windowHelper=WeakWindowHelper)
          #Create a context that:
          #- expires after 5 seconds of inactivity
          #- generates a correlation alert after 5 msg received
