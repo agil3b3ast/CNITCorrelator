@@ -255,20 +255,23 @@ class Context(IDMEF, Timer):
     def alert(self):
         #print(self._lastIDMEF)
         #saving analyzerid
-        analyzerid = self._lastIDMEF.get("alert.analyzer(0).analyzerid")
-        #tmp_analyzer = AnalyzerContents()
-        #tmp_analyzer.saveAnalyzerContents(self._lastIDMEF)
+        #analyzerid = self._lastIDMEF.get("alert.analyzer(0).analyzerid")
+        tmp_analyzer = AnalyzerContents()
+        tmp_analyzer.saveAnalyzerContents(self._lastIDMEF)
         #print(self)
         #print("############")
+        #The context must be destroyed before because we cannot permit that a plugin receives
+        #IDMEF when the context is already active, we would have inconsistency
+        self.destroy()
         super(Context, self).alert()
         #restoring analyzerid
-        self._lastIDMEF.set("alert.analyzer(0).analyzerid", analyzerid)
-        #tmp_analyzer.restoreAnalyzerContents(self._lastIDMEF)
+        #self._lastIDMEF.set("alert.analyzer(0).analyzerid", analyzerid)
+        tmp_analyzer.restoreAnalyzerContents(self._lastIDMEF)
         #cannot just reset update count because the alert continue to add
         #so the context must be removed from the context table
         print(self)
 
-        self.destroy()
+
 
     def merge(self, ctx):
         self._update_count += ctx._update_count
