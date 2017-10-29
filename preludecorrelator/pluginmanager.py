@@ -23,8 +23,34 @@ import imp
 
 from preludecorrelator import log, error, require, plugins
 
+
 logger = log.getLogger(__name__)
 
+class AnalyzerContents(object):
+
+    def __init__(self, attributes=None):
+        self.analyzers = IDMEF()
+        if attributes is None:
+            self.attributes = ["name","manufacturer","model","version","class","ostype","osversion","node.category","node.name","process.name","process.pid","process.path"]
+
+    def copyAnalyzers(self, source, dest):
+        list_attr = source.get("alert.analyzer(*)")
+        len_list_attr = len(list_attr)
+        for a in range(len_list_attr):
+            analyzer_num = "alert.analyzer({})".format(a)
+            dest.set("{}.analyzerid".format(analyzer_num),source.get("{}.analyzerid".format(analyzer_num)))
+
+            for att in self.attributes:
+                to_set = list_attr[a].get(att)
+                if to_set is not None:
+                    dest.set("{}.{}".format(analyzer_num,att), to_set)
+
+    def saveAnalyzerContents(self, idmef):
+        self.copyAnalyzers(idmef, self.analyzers)
+
+
+    def restoreAnalyzerContents(self, idmef):
+        self.copyAnalyzers(self.analyzers, idmef)
 
 class Plugin(object):
     enable = True
@@ -222,7 +248,10 @@ class PluginManager(object):
                  print("adding "+ plugin._getName())
                  self._active_plugins.append(plugin._getName())
                  print(self._active_plugins)
+                 tmp_analyzer = AnalyzerContents()
+                 tmp_analyzer.saveAnalyzerContents(idmef)
                  plugin.run(idmef)
+                 tmp_analyzer.restoreAnalyzerContents(idmef)
                  print("removing "+ plugin._getName())
                  self._active_plugins.pop()
                  print(self._active_plugins)
@@ -230,7 +259,10 @@ class PluginManager(object):
                  if plugin._getName() != self._active_plugins[-1]:
                   self._active_plugins.append([plugin._getName()])
                   print(self._active_plugins)
+                  tmp_analyzer = AnalyzerContents()
+                  tmp_analyzer.saveAnalyzerContents(idmef)
                   plugin.run(idmef)
+                  tmp_analyzer.restoreAnalyzerContents(idmef)
                   print("removing "+ plugin._getName())
                   self._active_plugins.pop()
                   print(self._active_plugins)
