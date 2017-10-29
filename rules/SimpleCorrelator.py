@@ -7,10 +7,10 @@ print("SimpleCorrelator")
 
 class SimpleCorrelator(Plugin):
     def run(self, idmef):
-         ctx = Context("MyContext", { "expire": 5, "threshold": 5, "window" : 1 ,"alert_on_expire": False }, update = True, idmef=idmef)
+         ctx = Context("MySimpleContext", { "expire": 5, "threshold": 5, "window" : 1 ,"alert_on_expire": False }, update = True, idmef=idmef)
          if ctx.getUpdateCount() == 0:
-          ctx.set("alert.correlation_alert.name", "Layer {} Correlation".format(LEVEL))
-          ctx.set("alert.classification.text", "MyFirstEntryLevelScan")
+          ctx.set("alert.correlation_alert.name", "MySimpleCorrelation")
+          ctx.set("alert.classification.text", "MySimpleScan")
           ctx.set("alert.assessment.impact.severity", "high")
 
          if ctx.getUpdateCount() >= ctx.getOptions()["threshold"] - 1:
