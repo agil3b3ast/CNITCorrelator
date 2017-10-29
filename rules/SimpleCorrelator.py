@@ -1,8 +1,6 @@
 from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.idmef import IDMEF
 from preludecorrelator.context import Context
-from preludecorrelator.context import search as context_search
-from preludecorrelator.windows.WeakWindowHelper import WeakWindowHelper
 
 
 print("SimpleCorrelator")
@@ -15,7 +13,7 @@ class SimpleCorrelator(Plugin):
              ctx.set("alert.classification.text", "MyFirstEntryLevelScan")
              ctx.set("alert.assessment.impact.severity", "high")
 
-        if ctx.getUpdateCount() >= ctx.getOptions()["threshold"]:
+        if ctx.getUpdateCount() >= ctx.getOptions()["threshold"] - 1:
           print("Hello from {}".format(self.__class__.__name__))
           print(ctx.get("alert.classification.text"))
           ctx.alert()
