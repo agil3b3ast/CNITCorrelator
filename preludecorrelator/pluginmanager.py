@@ -22,6 +22,7 @@ import os
 import imp
 
 from preludecorrelator import log, error, require, plugins
+from preludecorrelator.idmef import IDMEF
 
 
 logger = log.getLogger(__name__)
