@@ -256,7 +256,7 @@ class Context(IDMEF, Timer):
         #print("############")
         #The context must be destroyed before because we cannot permit that a plugin receives
         #IDMEF when the context is already active, we would have inconsistency
-        #self.destroy()
+        self.destroy()
         #To maintain window persistance we could create another context and assign the old window
         #print("#BEFORE ALERT#")
         #print(analyzerid)
