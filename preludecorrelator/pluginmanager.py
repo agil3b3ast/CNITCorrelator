@@ -22,36 +22,10 @@ import os
 import imp
 
 from preludecorrelator import log, error, require, plugins
-from preludecorrelator.idmef import IDMEF
+from preludecorrelator.idmef import AnalyzerContents
 
 
 logger = log.getLogger(__name__)
-
-class AnalyzerContents(object):
-
-    def __init__(self, attributes=None):
-        self.analyzers = IDMEF()
-        if attributes is None:
-            self.attributes = ["name","manufacturer","model","version","class","ostype","osversion","node.category","node.name","process.name","process.pid","process.path"]
-
-    def copyAnalyzers(self, source, dest):
-        list_attr = source.get("alert.analyzer(*)")
-        len_list_attr = len(list_attr)
-        for a in range(len_list_attr):
-            analyzer_num = "alert.analyzer({})".format(a)
-            dest.set("{}.analyzerid".format(analyzer_num),source.get("{}.analyzerid".format(analyzer_num)))
-
-            for att in self.attributes:
-                to_set = list_attr[a].get(att)
-                if to_set is not None:
-                    dest.set("{}.{}".format(analyzer_num,att), to_set)
-
-    def saveAnalyzerContents(self, idmef):
-        self.copyAnalyzers(idmef, self.analyzers)
-
-
-    def restoreAnalyzerContents(self, idmef):
-        self.copyAnalyzers(self.analyzers, idmef)
 
 class Plugin(object):
     enable = True
@@ -230,14 +204,15 @@ class PluginManager(object):
 
     def getActivePlugins():
      return self._active_plugins
-
+    '''
     def addActiveIDMEF(self, idmef_to_add):
      if len(self._active_plugins) == 0:
       return
      p_to_add = self._active_plugins[-1]
      p_to_add.append(idmef_to_add)
      self._active_plugins[-1] = p_to_add
-
+    '''
+    
     def print_active_plugins(self):
      for p in self._active_plugins:
       print(p[0])
