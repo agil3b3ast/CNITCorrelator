@@ -99,33 +99,6 @@ class Timer:
 
     def reset(self):
         self.start()
-'''
-class AnalyzerContents(object):
-
-    def __init__(self, attributes=None):
-        self.analyzers = IDMEF()
-        if attributes is None:
-            self.attributes = ["name","manufacturer","model","version","class","ostype","osversion","node.category","node.name","process.name","process.pid","process.path"]
-
-    def copyAnalyzers(self, source, dest):
-        list_attr = source.get("alert.analyzer(*)")
-        len_list_attr = len(list_attr)
-        for a in range(len_list_attr):
-            analyzer_num = "alert.analyzer({})".format(a)
-            dest.set("{}.analyzerid".format(analyzer_num),source.get("{}.analyzerid".format(analyzer_num)))
-
-            for att in self.attributes:
-                to_set = list_attr[a].get(att)
-                if to_set is not None:
-                    dest.set("{}.{}".format(analyzer_num,att), to_set)
-
-    def saveAnalyzerContents(self, idmef):
-        self.copyAnalyzers(idmef, self.analyzers)
-
-
-    def restoreAnalyzerContents(self, idmef):
-        self.copyAnalyzers(self.analyzers, idmef)
-'''
 
 class Context(IDMEF, Timer):
     FORMAT_VERSION = 0.2
@@ -134,7 +107,7 @@ class Context(IDMEF, Timer):
         IDMEF.__setstate__(self, dict)
         Timer.__setstate__(self, dict)
 
-    def __init__(self, name, options={}, overwrite=True, update=False, idmef=None, windowHelper=None):
+    def __init__(self, name, options={}, overwrite=True, update=False, idmef=None):
         already_initialized = (update or (overwrite is False)) and hasattr(self, "_name")
         if already_initialized is True:
             return
@@ -170,9 +143,6 @@ class Context(IDMEF, Timer):
         _CONTEXT_TABLE[name].append(self)
         logger.debug("[add]%s", self.getStat(), level=3)
 
-        if windowHelper is not None:
-            self._windowHelper = windowHelper(self)
-
         x = self._mergeIntersect(debug=False)
         if x > 0:
             logger.critical("A context merge happened on initialization. This should NOT happen : please report this error.")
@@ -180,7 +150,7 @@ class Context(IDMEF, Timer):
     def __getnewargs__(self):
         return (self._name, )
 
-    def __new__(cls, name, options={}, overwrite=True, update=False, idmef=None, windowHelper=None):
+    def __new__(cls, name, options={}, overwrite=True, update=False, idmef=None):
         if update or (overwrite is False):
             ctx = search(name, idmef, update=True)
             if ctx:
@@ -239,13 +209,14 @@ class Context(IDMEF, Timer):
                 return True
 
         return False
-
+    '''
     def setWindowHelper(self, windowHelper):
         self._windowHelper = windowHelper(self)
 
     def getWindowHelper(self):
         return self._windowHelper
-
+    '''
+    
     def alert(self):
         #print(self._lastIDMEF)
         #saving analyzerid

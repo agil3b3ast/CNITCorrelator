@@ -23,11 +23,13 @@ import imp
 
 from preludecorrelator import log, error, require, plugins
 from preludecorrelator.idmef import AnalyzerContents
-
+from preludecorrelator.windowhelper import WindowHolder
 
 logger = log.getLogger(__name__)
 
-class Plugin(object):
+class Plugin(WindowHolder):
+    super(Plugin, self).__init__()
+    
     enable = True
     autoload = True
     conflict = []
@@ -204,15 +206,7 @@ class PluginManager(object):
 
     def getActivePlugins():
      return self._active_plugins
-    '''
-    def addActiveIDMEF(self, idmef_to_add):
-     if len(self._active_plugins) == 0:
-      return
-     p_to_add = self._active_plugins[-1]
-     p_to_add.append(idmef_to_add)
-     self._active_plugins[-1] = p_to_add
-    '''
-    
+
     def print_active_plugins(self):
      for p in self._active_plugins:
       print(p[0])
