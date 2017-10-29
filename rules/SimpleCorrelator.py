@@ -13,7 +13,7 @@ class SimpleCorrelator(Plugin):
           ctx.set("alert.classification.text", "MyFirstEntryLevelScan")
           ctx.set("alert.assessment.impact.severity", "high")
 
-        if ctx.getUpdateCount() >= ctx.getOptions()["threshold"] - 1:
+         if ctx.getUpdateCount() >= ctx.getOptions()["threshold"] - 1:
           print("Hello from {}".format(self.__class__.__name__))
           print(ctx.get("alert.classification.text"))
           ctx.alert()
