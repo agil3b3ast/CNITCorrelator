@@ -21,9 +21,10 @@ class AdvancedLevelCorrelator(Plugin):
         print("{} received correlation".format(self.__class__.__name__))
 
         ctx = WeakContextHelper( context_id, { "expire": 1, "threshold": 2 ,"alert_on_expire": False }, update = True, idmef=idmef)
-        ctx.set("alert.correlation_alert.name", "Layer 2 Correlation")
-        ctx.set("alert.classification.text", "MyFirstAdvancedLevelScan")
-        ctx.set("alert.assessment.impact.severity", "high")
+        if ctx.getUpdateCount() == 0:
+         ctx.set("alert.correlation_alert.name", "Layer 2 Correlation")
+         ctx.set("alert.classification.text", "MyFirstAdvancedLevelScan")
+         ctx.set("alert.assessment.impact.severity", "high")
 
         if ctx.checkCorrelationAlert():
           print("Hello from %s" % self.__class__.__name__)
