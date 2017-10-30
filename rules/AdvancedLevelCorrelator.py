@@ -2,6 +2,7 @@ from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.idmef import IDMEF
 #from preludecorrelator.contexthelpers.WeakContextHelper import WeakContextHelper
 from preludecorrelator.contexthelpers.StrongContextHelper import StrongContextHelper
+from preludecorrelator.context import search as ctx_search
 
 LEVEL = 2
 print("{}, Layer {} Correlation".format("AdvancedLevelCorrelator", LEVEL))
@@ -21,7 +22,7 @@ class AdvancedLevelCorrelator(Plugin):
         print("{} received correlation".format(self.__class__.__name__))
 
         #ctx = WeakContextHelper( context_id, { "expire": 1, "threshold": 2 ,"alert_on_expire": False }, update = True, idmef=idmef)
-        ctx = StrongContextHelper.search(context_id)
+        ctx = ctx_search(context_id)
         if ctx is None:
          ctx = StrongContextHelper( context_id, { "expire": 1, "threshold": 2 ,"alert_on_expire": False }, idmef=idmef)
          ctx.set("alert.correlation_alert.name", "Layer 2 Correlation")
