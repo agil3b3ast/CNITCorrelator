@@ -22,6 +22,7 @@ class StrongContextHelper(Context):
         return super(StrongContextHelper, self).__init__(name, options, overwrite=False, update=False, idmef=None)
 
     def _addTimeStamp(self, idmef):
+        print(idmef.toString())
         tmp_analyzer = AnalyzerContents()
         tmp_analyzer.saveAnalyzerContents(idmef)
         self._timestamps.append([time.time(),idmef, tmp_analyzer])
