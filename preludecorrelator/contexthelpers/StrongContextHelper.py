@@ -3,8 +3,8 @@ import time
 
 class StrongContextHelper(Context):
 
-    def __new__(self, name, options={}, idmef=None):
-        super(StrongContextHelper, self).__new__(name, options, overwrite=False, update=False, idmef=None)
+    def __new__(cls, name, options={}, idmef=None):
+        super(StrongContextHelper, cls).__new__(name, options, overwrite=False, update=False, idmef=None)
         ctxRes = Context.search(name)
         if ctxRes is not None:
             ctx.reset()
