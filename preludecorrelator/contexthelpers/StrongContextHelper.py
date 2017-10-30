@@ -1,6 +1,7 @@
 from ..context import Context
 from ..context import search as ctx_search
 import time
+from ..idmef import AnalyzerContents
 
 class StrongContextHelper(Context):
 
@@ -21,7 +22,7 @@ class StrongContextHelper(Context):
         return super(StrongContextHelper, self).__init__(name, options, overwrite=False, update=False, idmef=None)
 
     def _addTimeStamp(self, idmef):
-        self._timestamps.append([time.time(),idmef])
+        self._timestamps.append([time.time(),idmef.copy()])
 
     def checkCorrelationAlert(self):
             now = time.time()
