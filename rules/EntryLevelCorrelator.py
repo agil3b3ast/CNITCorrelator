@@ -1,6 +1,6 @@
 from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.idmef import IDMEF
-from preludecorrelator.contexthelpers import WeakContextHelper
+from preludecorrelator.contexthelpers.WeakContextHelper import WeakContextHelper
 
 LEVEL = 1
 print("{}, {} Level Correlation".format("EntryLevelCorrelator", LEVEL))
