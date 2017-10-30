@@ -32,8 +32,9 @@ class StrongContextHelper(Context):
                 print("I am {} : timestamps[{}] < {}".format(self._name, t,self.getOptions()["expire"]))
                 if now - self._timestamps[t][0] < self.getOptions()["expire"]:
                  counter = counter + 1
+                 print("I am {} : reaching threshold with counter {}".format(self._name, counter))
                  if counter >= self.getOptions()["threshold"]:
-                     print("I am {} : threshold reached, counter {}".format(self._name, counter))
+                     print("I am {} : threshold reached".format(self._name))
                      for c in range(t,t+counter):
                          self.update(options=self.getOptions(), idmef=self._timestamps[t][1])
                      self.destroy()
@@ -42,4 +43,4 @@ class StrongContextHelper(Context):
                   print("I am {} : del timestamps[{}]".format(self._name, t))
                   del self._timestamps[t]
 
-                return False
+            return False
