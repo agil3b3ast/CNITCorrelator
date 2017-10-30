@@ -26,16 +26,20 @@ class StrongContextHelper(Context):
     def checkCorrelationAlert(self):
             now = time.time()
             len_timestamps = len(self._timestamps)
+            print("I am {} : len timestamps {}".format(self._name, len_timestamps))
             counter = 0
             for t in range(len_timestamps-1,-1,-1):
+                print("I am {} : timestamps[{}] < {}".format(self._name, t,self.getOptions()["expire"]))
                 if now - self._timestamps[t][0] < self.getOptions()["expire"]:
                  counter = counter + 1
                  if counter >= self.getOptions()["threshold"]:
+                     print("I am {} : threshold reached, counter {}".format(self._name, counter))
                      for c in range(t,t+counter):
                          self.update(options=self.getOptions(), idmef=self._timestamps[t][1])
                      self.destroy()
                      return True
                 else:
+                  print("I am {} : del timestamps[{}]".format(self._name, t))
                   del self._timestamps[t]
 
                 return False
