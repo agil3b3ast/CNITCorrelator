@@ -1,21 +1,24 @@
 from ..context import Context
+from ..context import search as ctx_search
 import time
 
 class StrongContextHelper(Context):
 
     def __new__(cls, name, options={}, idmef=None):
-        super(StrongContextHelper, cls).__new__(cls, name, options, overwrite=False, update=False, idmef=None)
-        ctxRes = Context.search(name)
+        ctxRes = ctx_search(name)
         if ctxRes is not None:
-            ctx.reset()
+            ctxRes.reset()
             if idmef is not None:
                 ctxRes._addTimeStamp(idmef)
+        return super(StrongContextHelper, cls).__new__(cls, name, options, overwrite=False, update=False, idmef=None)
 
     def __init__(self, name, options={}, idmef=None):
-        super(StrongContextHelper, self).__init__(name, options, overwrite=False, update=False, idmef=None)
-        self._timestamps = []
-        if idmef is not None:
-            self._addTimeStamp(idmef)
+        #check if already initialized
+        if not hasattr(self, "_name"):
+         self._timestamps = []
+         if idmef is not None:
+          self._addTimeStamp(idmef)
+        return super(StrongContextHelper, self).__init__(name, options, overwrite=False, update=False, idmef=None)
 
     def _addTimeStamp(self, idmef):
         self._timestamps.append([time.time(),idmef])
