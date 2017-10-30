@@ -2,6 +2,7 @@ from ..context import Context
 from ..context import search as ctx_search
 import time
 from ..idmef import AnalyzerContents
+import pickle
 
 class StrongContextHelper(Context):
 
@@ -22,7 +23,7 @@ class StrongContextHelper(Context):
         return super(StrongContextHelper, self).__init__(name, options, overwrite=False, update=False, idmef=None)
 
     def _addTimeStamp(self, idmef):
-        print(idmef.toString())
+        print(pickle.dumps(idmef))
         tmp_analyzer = AnalyzerContents()
         tmp_analyzer.saveAnalyzerContents(idmef)
         self._timestamps.append([time.time(),idmef, tmp_analyzer])
