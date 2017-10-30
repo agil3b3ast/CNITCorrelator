@@ -22,7 +22,7 @@ class StrongContextHelper(Context):
         return super(StrongContextHelper, self).__init__(name, options, overwrite=False, update=False, idmef=None)
 
     def _addTimeStamp(self, idmef):
-        self._timestamps.append([time.time(),idmef.copy()])
+        self._timestamps.append([time.time(),idmef[:]])
 
     def checkCorrelationAlert(self):
             now = time.time()
