@@ -4,7 +4,7 @@ import time
 class StrongContextHelper(Context):
 
     def __new__(self, name, options={}, idmef=None):
-        super(WeakContextHelper, self).__new__(name, options, overwrite=False, update=False, idmef=None)
+        super(StrongContextHelper, self).__new__(name, options, overwrite=False, update=False, idmef=None)
         ctxRes = Context.search(name)
         if ctxRes is not None:
             ctx.reset()
@@ -12,7 +12,7 @@ class StrongContextHelper(Context):
                 ctxRes._addTimeStamp(idmef)
 
     def __init__(self, name, options={}, idmef=None):
-        super(WeakContextHelper, self).__init__(name, options, overwrite=False, update=False, idmef=None)
+        super(StrongContextHelper, self).__init__(name, options, overwrite=False, update=False, idmef=None)
         self._timestamps = []
         if idmef is not None:
             self._addTimeStamp(idmef)
