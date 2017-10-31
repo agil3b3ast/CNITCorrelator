@@ -2,7 +2,8 @@ from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.idmef import IDMEF
 from preludecorrelator.context import Context
 from preludecorrelator.context import search as context_search
-from preludecorrelator.windows.StrongWindowHelper import StrongWindowHelper
+#from preludecorrelator.windows.StrongWindowHelper import StrongWindowHelper
+from preludecorrelator.windows.WeakWindowHelper import WeakWindowHelper
 
 LEVEL = 1
 print("{}, {} Level Correlation".format("EntryLevelCorrelator", LEVEL))
@@ -26,7 +27,8 @@ class EntryLevelCorrelator(Plugin):
          ctx.set("alert.classification.text", "MyFirstEntryLevelScan")
          ctx.set("alert.assessment.impact.severity", "high")
 
-        window = self.getWindowHelper(StrongWindowHelper, context_id)
+        #window = self.getWindowHelper(StrongWindowHelper, context_id)
+        window = self.getWindowHelper(WeakWindowHelper, context_id)
         window.addIdmef(idmef)
 
         if window.checkCorrelationWindow():
