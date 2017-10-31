@@ -25,7 +25,7 @@ class WindowHelper(object):
     def rst(self):
         pass
 
-    def addIdmef(self):
+    def addIdmef(self,idmef):
         pass
 
     def unbindContext(self):

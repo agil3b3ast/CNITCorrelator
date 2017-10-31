@@ -16,7 +16,7 @@ class WeakWindowHelper(WindowHelper):
     def rst(self):
         self._origTime = time.time()
 
-    def addIdmef(idmef):
+    def addIdmef(self, idmef):
         self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
 
     def checkCorrelationWindow(self):
