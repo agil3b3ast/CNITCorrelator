@@ -17,6 +17,7 @@ class EntryLevelCorrelator(Plugin):
          return
 
         window = self.getWindowHelper(context_id)
+        print(window)
         if window is None:
          options = { "expire": 1, "threshold": 5 ,"alert_on_expire": False }
          initial_attrs = {"alert.correlation_alert.name":"Layer {} Correlation".format(LEVEL),
@@ -28,7 +29,6 @@ class EntryLevelCorrelator(Plugin):
          #- checks for the threshold in a window of 1 second, if the window expires the correlation period restarts
          window = self.bindCtxToNewWindow(WeakWindowHelper, context_id, options, initial_attrs)
         #window = self.getWindowHelper(StrongWindowHelper, context_id)
-        print(window)
         window.addIdmef(idmef)
 
         if window.checkCorrelationWindow():

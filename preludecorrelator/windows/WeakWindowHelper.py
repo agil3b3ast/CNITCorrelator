@@ -19,6 +19,7 @@ class WeakWindowHelper(WindowHelper):
     def addIdmef(self, idmef):
         now = time.time()
         if now - self._origTime < self._ctx.getOptions()["expire"]:
+         print("update")
          self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
         else:
           #window is expired
