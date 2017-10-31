@@ -23,6 +23,9 @@ class WeakWindowHelper(WindowHelper):
         self._options = options
         self.initialAttrs = initial_attrs
 
+        for key,value in self.initialAttrs.iteritems():
+            self._ctx.set(key,value)
+
     def unbindContext(self):
         self._ctx = None
 
