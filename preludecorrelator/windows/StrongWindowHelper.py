@@ -1,6 +1,7 @@
 import time
 from ..windowhelper import WindowHelper
 from ..context import Context
+from ..idmef import AnalyzerContents
 
 class StrongWindowHelper(WindowHelper):
 
@@ -23,7 +24,7 @@ class StrongWindowHelper(WindowHelper):
     def checkCorrelationWindow():
         if self._ctx is None:
             return False
-        
+
         now = time.time()
         len_timestamps = len(self._timestamps)
         print("I am {} : len timestamps {}".format(self._name, len_timestamps))

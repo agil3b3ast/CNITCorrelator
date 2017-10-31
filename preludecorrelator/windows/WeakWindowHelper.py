@@ -25,8 +25,13 @@ class WeakWindowHelper(WindowHelper):
         now = time.time()
 
         if now - self._origTime < self._ctx.getOptions()["expire"]:
-         # remember that when we have a threshold of x reached, we have updated the context exactly x - 1 times
-         if self._ctx.getUpdateCount() >= self._ctx.getOptions()["threshold"] - 1:
+         # check number of alert received
+         alert_received = self._ctx.get("alert.correlation_alert.alertident(*).analyzerid")
+         if alert_received is None:
+             alert_received = 0
+         else:
+             alert_received = len(alert_received)
+         if alert_received >= self._ctx.getOptions()["threshold"]:
              #return True
              return True
         else:
