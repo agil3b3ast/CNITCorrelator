@@ -7,25 +7,28 @@ class WindowHelper(object):
         self._ctx = ctx
         self._name = getCtxName(name)
 
-    def getCtx():
+    def getCtx(self):
         return self._ctx
 
     def setCtx(self, ctx):
         self._ctx = ctx
 
-    def getName():
+    def getName(self):
         return self._name
 
     def checkCorrelationWindow(self):
         pass
 
-    def rst():
+    def generateCorrelationAlert(self):
         pass
 
-    def addIdmef():
+    def rst(self):
         pass
 
-    def unbindContext():
+    def addIdmef(self):
+        pass
+
+    def unbindContext(self):
         pass
 
 

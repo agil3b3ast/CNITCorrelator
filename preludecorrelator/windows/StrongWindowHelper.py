@@ -13,15 +13,15 @@ class StrongWindowHelper(WindowHelper):
     def unbindContext(self):
         self._ctx = None
 
-    def rst():
+    def rst(self):
         self._timestamps = []
 
-    def addIdmef(idmef):
+    def addIdmef(self, idmef):
         tmp_analyzer = AnalyzerContents()
         tmp_analyzer.saveAnalyzerContents(idmef)
         self._timestamps.append([time.time(),idmef, tmp_analyzer])
 
-    def checkCorrelationWindow():
+    def checkCorrelationWindow(self):
         if self._ctx is None:
             return False
 
@@ -48,7 +48,7 @@ class StrongWindowHelper(WindowHelper):
 
         return False
 
-    def generateCorrelationAlert():
+    def generateCorrelationAlert(self):
         self._ctx.destroy()
         self.unbindContext()
         self._ctx.alert()

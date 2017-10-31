@@ -12,13 +12,13 @@ class WeakWindowHelper(WindowHelper):
     def unbindContext(self):
         self._ctx = None
 
-    def rst():
+    def rst(self):
         self._origTime = time.time()
 
     def addIdmef(idmef):
         self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
 
-    def checkCorrelationWindow():
+    def checkCorrelationWindow(self):
         if self._ctx is None:
             return False
 
@@ -39,7 +39,7 @@ class WeakWindowHelper(WindowHelper):
 
         return False
 
-    def generateCorrelationAlert():
+    def generateCorrelationAlert(self):
         self._ctx.destroy()
         self.unbindContext()
         self._ctx.alert()
