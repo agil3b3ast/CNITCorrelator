@@ -43,8 +43,8 @@ class WindowHolder(object):
             return None
         for w in self._windowHelpers:
             if w.getName() == getCtxName(ctx_name):
-                if w.getContext() is None:
-                    w.setContext(ctx)
+                if w.getCtx() is None:
+                    w.setCtx(ctx)
                     w.rst()
                 return w
         new_inst = class_name(ctx_name, ctx)
