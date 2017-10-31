@@ -3,9 +3,9 @@ from context import getName as getCtxName
 
 class WindowHelper(object):
 
-    def __init__(self, ctx):
+    def __init__(self, name, ctx):
         self._ctx = ctx
-        self._name = ctx.getName()
+        self._name = getCtxName(name)
 
     def getCtx():
         return self._ctx
@@ -44,7 +44,7 @@ class WindowHolder(object):
                     w.setContext(ctx)
                     w.rst()
                 return w
-        new_inst = class_name(ctx)
+        new_inst = class_name(ctx_name, ctx)
         self.addWindowHelper(new_inst)
         return new_inst
 
