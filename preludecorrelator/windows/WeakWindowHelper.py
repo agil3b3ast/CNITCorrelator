@@ -28,7 +28,7 @@ class WeakWindowHelper(WindowHelper):
           self._ctx.destroy()
           self.rst()
           print("I am {} , Context is destroyed".format(self._name))
-          self._ctx = Context(self._name, self._ctx.getOptions, update = False)
+          self._ctx = Context(self._name, self._ctx.getOptions(), update = False)
           self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
 
 
