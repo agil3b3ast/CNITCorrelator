@@ -16,7 +16,7 @@ class EntryLevelCorrelator(Plugin):
         if idmef.get("alert.correlation_alert.name") is not None:
          return
 
-        window = self.getWindowHelper(WeakWindowHelper, context_id)
+        window = self.getWindowHelper(context_id)
         if window is None:
          options = { "expire": 1, "threshold": 5 ,"alert_on_expire": False }
          initial_attrs = {"alert.correlation_alert.name":"Layer {} Correlation".format(LEVEL),

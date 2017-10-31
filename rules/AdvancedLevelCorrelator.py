@@ -26,7 +26,7 @@ class AdvancedLevelCorrelator(Plugin):
 
 
         #ctx = ctx_search(context_id)
-        window = self.getWindowHelper(WeakWindowHelper, context_id)
+        window = self.getWindowHelper(context_id)
 
         if window is None:
             options = { "expire": 1, "threshold": 2 ,"alert_on_expire": False }
