@@ -24,17 +24,21 @@ class AdvancedLevelCorrelator22(Plugin):
         print(corr_name)
         print(idmef)
 
-        ctx = context_search( context_id)
-        if ctx is None:
-         ctx = Context( context_id, { "expire": 5, "threshold": 2, "window" : 1 ,"alert_on_expire": False }, update = False, idmef=idmef, windowHelper=WeakWindowHelper)
-         ctx.set("alert.correlation_alert.name", "Layer 2 Correlation")
-         ctx.set("alert.classification.text", "MyFirstAdvancedLevelScan2")
-         ctx.set("alert.assessment.impact.severity", "high")
-        else:
-         ctx.update(options={ "expire": 5, "threshold": 2, "window" : 1 ,"alert_on_expire": False }, idmef=idmef)
 
-        if ctx.getWindowHelper().checkCorrelationWindow():
+        ctx = ctx_search(context_id)
+
+        if ctx is None:
+            ctx = Context( context_id, { "expire": 5, "threshold": 2 ,"alert_on_expire": False }, update = False)
+            ctx.set("alert.correlation_alert.name", "Layer 2 Correlation")
+            ctx.set("alert.classification.text", "MyFirstAdvancedLevelScan22")
+            ctx.set("alert.assessment.impact.severity", "high")
+
+        window = self.getWindowHelper(WeakWindowHelper, context_id)
+        window.addIdmef(idmef)
+
+        #if ctx.getWindowHelper().checkCorrelationWindow():
+        if window.checkCorrelationWindow():
           print("Hello from %s" % self.__class__.__name__)
-          print(ctx.get("alert.classification.text"))
-          ctx.alert()
-          print("Alert Finished AdvancedLevelCorrelator2")
+          print(window.getCtx().get("alert.classification.text"))
+          window.generateCorrelationAlert()
+          print("Alert Finished AdvancedLevelCorrelator22")
