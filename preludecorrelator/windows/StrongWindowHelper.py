@@ -24,6 +24,7 @@ class StrongWindowHelper(WindowHelper):
         self._timestamps.append([time.time(),idmef, tmp_analyzer])
 
     def checkCorrelationWindow(self):
+
         if self._ctx is None:
             return False
 
@@ -54,4 +55,5 @@ class StrongWindowHelper(WindowHelper):
         tmp_ctx = ctx_search(self._name)
         self._ctx.destroy()
         self.unbindContext()
+        self.rst()
         tmp_ctx.alert()

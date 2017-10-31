@@ -17,28 +17,40 @@ class WeakWindowHelper(WindowHelper):
         self._origTime = time.time()
 
     def addIdmef(self, idmef):
-        self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
+        if self._ctx is None:
+            return
+
+        now = time.time()
+        if now - self._origTime < self._ctx.getOptions()["expire"]:
+         self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
+        else:
+          #window is expired
+          self._ctx.destroy()
+          self.rst()
+          print("I am {} , Context is destroyed".format(self._name))
+          self._ctx = Context(self._name, self._ctx.getOptions, update = False)
+          self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
+
 
     def checkCorrelationWindow(self):
+
         if self._ctx is None:
             return False
 
-        now = time.time()
-
-        if now - self._origTime < self._ctx.getOptions()["expire"]:
+        #if now - self._origTime < self._ctx.getOptions()["expire"]:
          # check number of alert received
-         alert_received = self._ctx.get("alert.correlation_alert.alertident(*).analyzerid")
-         if alert_received is None:
-             alert_received = 0
-         else:
-             alert_received = len(alert_received)
-         print("I am {} : these are my alert received {}".format(self._name, alert_received))
-         if alert_received >= self._ctx.getOptions()["threshold"]:
-             return True
+        alert_received = self._ctx.get("alert.correlation_alert.alertident(*).analyzerid")
+        if alert_received is None:
+         alert_received = 0
         else:
-          self._ctx.destroy()
-          print("I am {} , Context is destroyed".format(self._name))
-          self.unbindContext()
+         alert_received = len(alert_received)
+        print("I am {} : these are my alert received {}".format(self._name, alert_received))
+        if alert_received >= self._ctx.getOptions()["threshold"]:
+         return True
+        #else:
+        #  self._ctx.destroy()
+        #  print("I am {} , Context is destroyed".format(self._name))
+        #  self.unbindContext()
 
         return False
 
@@ -46,4 +58,5 @@ class WeakWindowHelper(WindowHelper):
         tmp_ctx = ctx_search(self._name)
         self._ctx.destroy()
         self.unbindContext()
+        self.rst()
         tmp_ctx.alert()
