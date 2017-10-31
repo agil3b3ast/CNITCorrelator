@@ -5,8 +5,8 @@ from ..context import search as ctx_search
 
 class WeakWindowHelper(WindowHelper):
 
-    def __init__(self, name,ctx):
-        super(WeakWindowHelper, self).__init__(name, ctx)
+    def __init__(self, name,ctx, initial_attrs):
+        super(WeakWindowHelper, self).__init__(name, ctx, initial_attrs)
         self._origTime = time.time()
 
 
@@ -29,9 +29,11 @@ class WeakWindowHelper(WindowHelper):
           self.rst()
           print("I am {} , Context is destroyed".format(self._name))
           tmp_ctx = Context(self._name, self._ctx.getOptions(), update = False)
-          tmp_ctx.set("alert.correlation_alert.name", self._ctx.get("alert.correlation_alert.name"))
-          tmp_ctx.set("alert.classification.text", self._ctx.get("alert.classification.text"))
-          tmp_ctx.set("alert.assessment.impact.severity", self._ctx.get("alert.assessment.impact.severity"))
+          #tmp_ctx.set("alert.correlation_alert.name", self._ctx.get("alert.correlation_alert.name"))
+          #tmp_ctx.set("alert.classification.text", self._ctx.get("alert.classification.text"))
+          #tmp_ctx.set("alert.assessment.impact.severity", self._ctx.get("alert.assessment.impact.severity"))
+          for key,value in self.initialAttrs:
+              tmp_ctx.set(key,value)
           self._ctx = tmp_ctx
           self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
 
