@@ -4,8 +4,8 @@ from..context import Context
 
 class WeakWindowHelper(WindowHelper):
 
-    def __init__(self, ctx):
-        super(WeakWindowHelper, self).__init__(ctx)
+    def __init__(self, name,ctx):
+        super(WeakWindowHelper, self).__init__(name, ctx)
         self._origTime = time.time()
 
 

@@ -5,8 +5,8 @@ from ..idmef import AnalyzerContents
 
 class StrongWindowHelper(WindowHelper):
 
-    def __init__(self, ctx):
-        super(StrongWindowHelper, self).__init__(ctx)
+    def __init__(self, name, ctx):
+        super(StrongWindowHelper, self).__init__(name, ctx)
         self._timestamps = []
 
 
