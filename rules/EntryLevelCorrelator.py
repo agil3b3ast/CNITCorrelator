@@ -28,6 +28,7 @@ class EntryLevelCorrelator(Plugin):
          #- checks for the threshold in a window of 1 second, if the window expires the correlation period restarts
          window = self.bindCtxToNewWindow(WeakWindowHelper, context_id, options, initial_attrs)
         #window = self.getWindowHelper(StrongWindowHelper, context_id)
+        print(window)
         window.addIdmef(idmef)
 
         if window.checkCorrelationWindow():
