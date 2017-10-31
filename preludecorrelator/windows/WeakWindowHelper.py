@@ -28,7 +28,11 @@ class WeakWindowHelper(WindowHelper):
           self._ctx.destroy()
           self.rst()
           print("I am {} , Context is destroyed".format(self._name))
-          self._ctx = Context(self._name, self._ctx.getOptions(), update = False)
+          tmp_ctx = Context(self._name, self._ctx.getOptions(), update = False)
+          tmp_ctx.set("alert.correlation_alert.name", self._ctx.get("alert.correlation_alert.name"))
+          tmp_ctx.set("alert.classification.text", self._ctx.get("alert.classification.text"))
+          tmp_ctx.set("alert.assessment.impact.severity", self._ctx.get("alert.assessment.impact.severity"))
+          self._ctx = tmp_ctx
           self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
 
 
