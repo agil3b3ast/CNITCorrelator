@@ -37,6 +37,7 @@ class WeakWindowHelper(WindowHelper):
              return True
         else:
           self._ctx.destroy()
+          print("I am {} , Context is destroyed".format(self._name))
           self.unbindContext()
 
         return False
