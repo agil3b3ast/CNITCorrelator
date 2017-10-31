@@ -52,9 +52,8 @@ class WeakWindowHelper(WindowHelper):
     def checkCorrelationWindow(self):
          alert_received = self._countAlertReceived()
          print("I am {}, alert received {}".format(self._name, alert_received))
-         if alert_received >= self._ctx.getOptions()["threshold"]:
-             return True
-         return False
+         return alert_received >= self._ctx.getOptions()["threshold"]
+
 
     def generateCorrelationAlert(self):
         tmp_ctx = ctx_search(self._name)

@@ -16,6 +16,8 @@ class EntryLevelCorrelator(Plugin):
         if idmef.get("alert.correlation_alert.name") is not None:
          return
 
+        print("The context not exists {}".format(ctx_search(context_id) is None))
+
         window = self.getWindowHelper(WeakWindowHelper, context_id)
         if window.isEmpty():
          options = { "expire": 1, "threshold": 5 ,"alert_on_expire": False }
