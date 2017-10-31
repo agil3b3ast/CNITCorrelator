@@ -5,12 +5,14 @@ from ..context import search as ctx_search
 
 class WeakWindowHelper(WindowHelper):
 
+
     def __init__(self, name):
         super(WeakWindowHelper, self).__init__(name)
         #self._origTime = time.time()
 
+
     def isEmpty(self):
-        return ctx_search(self._name) is None            
+        return ctx_search(self._name) is None
 
     def bindContext(self, options, initial_attrs):
         res = ctx_search(self._name)
@@ -45,11 +47,11 @@ class WeakWindowHelper(WindowHelper):
          alert_received = self._countAlertReceived()
          if alert_received >= self._ctx.getOptions()["threshold"]:
              return True
-
-        return False
+         return False
 
     def generateCorrelationAlert(self):
         tmp_ctx = ctx_search(self._name)
         self._ctx.destroy()
         self.unbindContext()
+        self.rst()
         tmp_ctx.alert()
