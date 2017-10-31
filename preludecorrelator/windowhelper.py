@@ -52,7 +52,7 @@ class WindowHolder(object):
             ctx = Context(context_id, options, update = False)
             for key, value in initial_attrs.iteritems():
                 ctx.set(key, value)
-        return class_name(ctx, context_id, options, initial_attrs)
+        return class_name(context_id, ctx,initial_attrs)
 
     def getWindowHelper(self, ctx_name):
         #ctx = ctx_search(ctx_name)
