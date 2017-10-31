@@ -23,12 +23,11 @@ import imp
 
 from preludecorrelator import log, error, require, plugins
 from preludecorrelator.idmef import AnalyzerContents
-from preludecorrelator.windowhelper.WindowHolder import WindowHolder
+from preludecorrelator.windowhelper import WindowHolder
 
 logger = log.getLogger(__name__)
 
 class Plugin(WindowHolder):
-    super(Plugin, self).__init__()
 
     enable = True
     autoload = True
@@ -38,6 +37,7 @@ class Plugin(WindowHolder):
         return self.env.config.get(self.__class__.__name__, option, default=default, type=type)
 
     def __init__(self, env):
+        super(Plugin, self).__init__()
         self.env = env
 
     def _getName(self):
