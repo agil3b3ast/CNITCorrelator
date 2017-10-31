@@ -5,11 +5,11 @@ from preludecorrelator.context import search as context_search
 from preludecorrelator.windows.StrongWindowHelper import StrongWindowHelper
 
 LEVEL = 1
-print("{}, {} Level Correlation".format("EntryLevelCorrelator", LEVEL))
+print("{}, {} Level Correlation3".format("EntryLevelCorrelator", LEVEL))
 #The context should be unique, it's better add the class name since we know it's unique
-context_id = "{}Layer{}Correlation".format("EntryLevelCorrelator", LEVEL)
+context_id = "{}Layer{}Correlation3".format("EntryLevelCorrelator", LEVEL)
 
-class EntryLevelCorrelator(Plugin):
+class EntryLevelCorrelator13(Plugin):
     def run(self, idmef):
         #Receive only simple alerts, not correlation alerts
         if idmef.get("alert.correlation_alert.name") is not None:
@@ -23,7 +23,7 @@ class EntryLevelCorrelator(Plugin):
          #- generates a correlation alert after 5 msg received
          #- checks for the threshold in a window of 1 second, if the window expires the correlation period restarts
          ctx.set("alert.correlation_alert.name", "Layer {} Correlation".format(LEVEL))
-         ctx.set("alert.classification.text", "MyFirstEntryLevelScan")
+         ctx.set("alert.classification.text", "MyFirstEntryLevelScan13")
          ctx.set("alert.assessment.impact.severity", "high")
 
         window = self.getWindowHelper(StrongWindowHelper, context_id)

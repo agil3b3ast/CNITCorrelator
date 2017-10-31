@@ -4,12 +4,12 @@ from preludecorrelator.context import Context
 from preludecorrelator.context import search as ctx_search
 from preludecorrelator.windows.WeakWindowHelper import WeakWindowHelper
 
-LEVEL = 2
-print("{}, Layer {} Correlation".format("AdvancedLevelCorrelator", LEVEL))
-context_id = "{}Layer{}Correlation".format("AdvancedLevelCorrelator", LEVEL)
+LEVEL = 3
+print("{}, Layer {} Correlation1".format("AdvancedLevelCorrelator", LEVEL))
+context_id = "{}Layer{}Correlation1".format("AdvancedLevelCorrelator", LEVEL)
 
 
-class AdvancedLevelCorrelator(Plugin):
+class AdvancedLevelCorrelator31(Plugin):
 
     def run(self, idmef):
         corr_name = idmef.get("alert.correlation_alert.name")
@@ -29,8 +29,8 @@ class AdvancedLevelCorrelator(Plugin):
 
         if ctx is None:
             ctx = Context( context_id, { "expire": 1, "threshold": 2 ,"alert_on_expire": False }, update = False)
-            ctx.set("alert.correlation_alert.name", "Layer 2 Correlation")
-            ctx.set("alert.classification.text", "MyFirstAdvancedLevelScan")
+            ctx.set("alert.correlation_alert.name", "Layer 3 Correlation")
+            ctx.set("alert.classification.text", "MyFirstAdvancedLevelScan31")
             ctx.set("alert.assessment.impact.severity", "high")
 
         window = self.getWindowHelper(WeakWindowHelper, context_id)
@@ -41,4 +41,4 @@ class AdvancedLevelCorrelator(Plugin):
           print("Hello from %s" % self.__class__.__name__)
           print(window.getCtx().get("alert.classification.text"))
           window.generateCorrelationAlert()
-          print("Alert Finished AdvancedLevelCorrelator")
+          print("Alert Finished AdvancedLevelCorrelator31")
