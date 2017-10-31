@@ -1,5 +1,6 @@
 from context import search as ctx_search
 from context import getName as getCtxName
+from context import Context
 
 class WindowHelper(object):
 
