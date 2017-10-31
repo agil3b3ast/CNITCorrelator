@@ -32,7 +32,7 @@ class WeakWindowHelper(WindowHelper):
              alert_received = 0
          else:
              alert_received = len(alert_received)
-          print("I am {} : these are my alert received".format(self._name, alert_received))
+          print("I am {} : these are my alert received {}".format(self._name, alert_received))
          if alert_received >= self._ctx.getOptions()["threshold"]:
              return True
         else:
