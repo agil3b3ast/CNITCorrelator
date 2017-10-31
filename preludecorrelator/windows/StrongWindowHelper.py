@@ -2,6 +2,8 @@ import time
 from ..windowhelper import WindowHelper
 from ..context import Context
 from ..idmef import AnalyzerContents
+from ..context import search as ctx_search
+
 
 class StrongWindowHelper(WindowHelper):
 
@@ -49,6 +51,7 @@ class StrongWindowHelper(WindowHelper):
         return False
 
     def generateCorrelationAlert(self):
+        tmp_ctx = ctx_search(self._name)
         self._ctx.destroy()
         self.unbindContext()
-        self._ctx.alert()
+        tmp_ctx.alert()
