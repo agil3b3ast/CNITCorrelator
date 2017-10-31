@@ -6,8 +6,8 @@ from preludecorrelator.windows.StrongWindowHelper import StrongWindowHelper
 
 LEVEL = 2
 NUMBER = 0
-print("{}, Layer {} Correlation{}".format("AdvancedLevelCorrelator", LEVEL))
-context_id = "{}Layer{}Correlation{}".format("AdvancedLevelCorrelator", LEVEL)
+print("{}, Layer {} Correlation{}".format("AdvancedLevelCorrelator", LEVEL, NUMBER))
+context_id = "{}Layer{}Correlation{}".format("AdvancedLevelCorrelator", LEVEL, NUMBER)
 
 
 class AdvancedLevelCorrelator(Plugin):
