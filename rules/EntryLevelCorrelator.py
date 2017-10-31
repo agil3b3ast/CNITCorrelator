@@ -2,7 +2,7 @@ from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.idmef import IDMEF
 from preludecorrelator.context import Context
 from preludecorrelator.context import search as context_search
-from preludecorrelator.windows.WeakWindowHelper import WeakWindowHelper
+from preludecorrelator.windows.StrongWindowHelper import StrongWindowHelper
 
 LEVEL = 1
 print("{}, {} Level Correlation".format("EntryLevelCorrelator", LEVEL))
@@ -17,7 +17,7 @@ class EntryLevelCorrelator(Plugin):
 
         ctx = context_search(context_id)
         if ctx is None:
-         ctx = Context(context_id, { "expire": 5, "threshold": 5, "window" : 1 ,"alert_on_expire": False }, update = False, idmef=idmef, windowHelper=WeakWindowHelper)
+         ctx = Context(context_id, { "expire": 5, "threshold": 5, "window" : 1 ,"alert_on_expire": False }, update = False)
          #Create a context that:
          #- expires after 5 seconds of inactivity
          #- generates a correlation alert after 5 msg received
@@ -25,11 +25,12 @@ class EntryLevelCorrelator(Plugin):
          ctx.set("alert.correlation_alert.name", "Layer {} Correlation".format(LEVEL))
          ctx.set("alert.classification.text", "MyFirstEntryLevelScan")
          ctx.set("alert.assessment.impact.severity", "high")
-        else:
-         ctx.update(options={ "expire": 5, "threshold": 5, "window" : 1 ,"alert_on_expire": False }, idmef=idmef)
 
-        if ctx.getWindowHelper().checkCorrelationWindow():
+        window = self.getWindowHelper(StrongWindowHelper, context_id)
+        window.addIdmef(idmef)
+
+        if window.checkCorrelationWindow():
           print("Hello from {}".format(self.__class__.__name__))
-          print(ctx.get("alert.classification.text"))
-          ctx.alert()
+          print(window.getCtx().get("alert.classification.text"))
+          window.generateCorrelationAlert()
           print("{} Alert finished".format(self.__class__.__name__))

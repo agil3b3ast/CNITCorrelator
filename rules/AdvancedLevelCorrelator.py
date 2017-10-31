@@ -28,12 +28,12 @@ class AdvancedLevelCorrelator(Plugin):
         ctx = ctx_search(context_id)
 
         if ctx is None:
-            ctx = Context( context_id, { "expire": 5, "threshold": 2 ,"alert_on_expire": False }, update = False, idmef=idmef)
+            ctx = Context( context_id, { "expire": 5, "threshold": 2 ,"alert_on_expire": False }, update = False)
             ctx.set("alert.correlation_alert.name", "Layer 2 Correlation")
             ctx.set("alert.classification.text", "MyFirstAdvancedLevelScan")
             ctx.set("alert.assessment.impact.severity", "high")
 
-        window = self.getWindowHelper(WeakWindowHelper, ctx)
+        window = self.getWindowHelper(WeakWindowHelper, context_id)
         window.addIdmef(idmef)
 
         #if ctx.getWindowHelper().checkCorrelationWindow():
