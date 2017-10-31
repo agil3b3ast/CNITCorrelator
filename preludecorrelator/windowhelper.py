@@ -1,4 +1,5 @@
 from context import search as ctx_search
+from context import getName as getCtxName
 
 class WindowHelper(object):
 
@@ -38,12 +39,14 @@ class WindowHolder(object):
         if ctx is None:
             return None
         for w in self._windowHelpers:
-            if w.getName() == ctx.getName():
+            if w.getName() == getCtxName(ctx_name):
                 if w.getContext() is None:
                     w.setContext(ctx)
                     w.rst()
                 return w
-        return class_name(ctx.getName(), ctx)
+        new_inst = class_name(ctx)
+        self.addWindowHelper(new_inst)
+        return new_inst
 
     def getWindowHelpers(self):
         return self._windowHelpers()
