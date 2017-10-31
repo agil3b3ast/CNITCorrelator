@@ -47,6 +47,7 @@ class WeakWindowHelper(WindowHelper):
          alert_received = 0
      else:
          alert_received = len(alert_received)
+     return alert_received
 
     def checkCorrelationWindow(self):
          alert_received = self._countAlertReceived()
