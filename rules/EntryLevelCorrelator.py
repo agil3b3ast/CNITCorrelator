@@ -16,19 +16,18 @@ class EntryLevelCorrelator(Plugin):
         if idmef.get("alert.correlation_alert.name") is not None:
          return
 
-        ctx = context_search(context_id)
-        if ctx is None:
-         ctx = Context(context_id, { "expire": 1, "threshold": 5, "window" : 1 ,"alert_on_expire": False }, update = False)
+        window = self.getWindowHelper(WeakWindowHelper, context_id)
+        if window is None:
+         options = { "expire": 1, "threshold": 5 ,"alert_on_expire": False }
+         initial_attrs = {"alert.correlation_alert.name":"Layer {} Correlation".format(LEVEL),
+         "alert.classification.text": "MyFirstEntryLevelScan",
+         "alert.assessment.impact.severity": "high"}
          #Create a context that:
-         #- expires after 5 seconds of inactivity
+         #- expires after 1 seconds of inactivity
          #- generates a correlation alert after 5 msg received
          #- checks for the threshold in a window of 1 second, if the window expires the correlation period restarts
-         ctx.set("alert.correlation_alert.name", "Layer {} Correlation".format(LEVEL))
-         ctx.set("alert.classification.text", "MyFirstEntryLevelScan")
-         ctx.set("alert.assessment.impact.severity", "high")
-
+         window = self.bindCtxToNewWindow(context_id, options, initial_attrs)
         #window = self.getWindowHelper(StrongWindowHelper, context_id)
-        window = self.getWindowHelper(WeakWindowHelper, context_id)
         window.addIdmef(idmef)
 
         if window.checkCorrelationWindow():

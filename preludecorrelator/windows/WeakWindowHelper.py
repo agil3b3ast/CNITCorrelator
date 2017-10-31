@@ -17,9 +17,6 @@ class WeakWindowHelper(WindowHelper):
         self._origTime = time.time()
 
     def addIdmef(self, idmef):
-        if self._ctx is None:
-            return
-
         now = time.time()
         if now - self._origTime < self._ctx.getOptions()["expire"]:
          self._ctx.update(options=self._ctx.getOptions(), idmef=idmef)
@@ -39,9 +36,6 @@ class WeakWindowHelper(WindowHelper):
 
 
     def checkCorrelationWindow(self):
-
-        if self._ctx is None:
-            return False
 
         #if now - self._origTime < self._ctx.getOptions()["expire"]:
          # check number of alert received

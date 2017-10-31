@@ -25,9 +25,6 @@ class StrongWindowHelper(WindowHelper):
 
     def checkCorrelationWindow(self):
 
-        if self._ctx is None:
-            return False
-
         now = time.time()
         len_timestamps = len(self._timestamps)
         print("I am {} : len timestamps {}".format(self._name, len_timestamps))
