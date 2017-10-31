@@ -46,7 +46,7 @@ class WindowHolder(object):
         self._windowHelpers = []
 
     def bindCtxToNewWindow(self, class_name, context_id, options, initial_attrs):
-        ctx = ctx_search(ctx_name)
+        ctx = ctx_search(context_id)
         if ctx is None:
             ctx = Context(context_id, options, update = False)
             for key, value in initial_attrs.iteritems():
