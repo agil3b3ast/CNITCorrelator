@@ -2,11 +2,12 @@ from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.idmef import IDMEF
 from preludecorrelator.context import Context
 from preludecorrelator.context import search as ctx_search
-from preludecorrelator.windows.WeakWindowHelper import WeakWindowHelper
+from preludecorrelator.windows.StrongWindowHelper import StrongWindowHelper
 
 LEVEL = 2
-print("{}, Layer {} Correlation".format("AdvancedLevelCorrelator", LEVEL))
-context_id = "{}Layer{}Correlation".format("AdvancedLevelCorrelator", LEVEL)
+NUMBER = 0
+print("{}, Layer {} Correlation{}".format("AdvancedLevelCorrelator", LEVEL))
+context_id = "{}Layer{}Correlation{}".format("AdvancedLevelCorrelator", LEVEL)
 
 
 class AdvancedLevelCorrelator(Plugin):
@@ -24,21 +25,21 @@ class AdvancedLevelCorrelator(Plugin):
         print(corr_name)
         print(idmef)
 
+        window = self.getWindowHelper(StrongWindowHelper, context_id)
 
-        ctx = ctx_search(context_id)
+        if window.isEmpty():
+            options = { "expire": 1, "threshold": 2 ,"alert_on_expire": False }
+            initial_attrs = {"alert.correlation_alert.name": "Layer {} Correlation".format(LEVEL),
+            "alert.classification.text": "MyFirstAdvancedLevelScan{}".format(NUMBER),
+            "alert.assessment.impact.severity": "high"}
 
-        if ctx is None:
-            ctx = Context( context_id, { "expire": 1, "threshold": 2 ,"alert_on_expire": False }, update = False)
-            ctx.set("alert.correlation_alert.name", "Layer 2 Correlation")
-            ctx.set("alert.classification.text", "MyFirstAdvancedLevelScan")
-            ctx.set("alert.assessment.impact.severity", "high")
+            window.bindContext(options, initial_attrs)
 
-        window = self.getWindowHelper(WeakWindowHelper, context_id)
         window.addIdmef(idmef)
 
         #if ctx.getWindowHelper().checkCorrelationWindow():
         if window.checkCorrelationWindow():
           print("Hello from %s" % self.__class__.__name__)
-          print(window.getCtx().get("alert.classification.text"))
+          print(window.getIdmefField("alert.classification.text"))
           window.generateCorrelationAlert()
-          print("Alert Finished AdvancedLevelCorrelator")
+          print("Alert Finished %s" % self.__class__.__name__)
