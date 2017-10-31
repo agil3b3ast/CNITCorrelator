@@ -43,7 +43,7 @@ class WindowHolder(object):
                     w.setContext(ctx)
                     w.rst()
                 return w
-        return class_name(name, ctx)
+        return class_name(ctx.getName(), ctx)
 
     def getWindowHelpers(self):
         return self._windowHelpers()
