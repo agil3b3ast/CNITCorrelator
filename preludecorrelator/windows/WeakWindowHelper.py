@@ -16,10 +16,12 @@ class WeakWindowHelper(WindowHelper):
 
     def bindContext(self, options, initial_attrs):
         res = ctx_search(self._name)
-        if res is not None:
+        if res is None:
          self._ctx = Context(self._name, options, update=False)
-         self._options = options
-         self.initialAttrs = initial_attrs
+        else:
+         self._ctx = res
+        self._options = options
+        self.initialAttrs = initial_attrs
 
     def unbindContext(self):
         self._ctx = None
