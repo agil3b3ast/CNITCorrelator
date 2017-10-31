@@ -32,7 +32,6 @@ class WeakWindowHelper(WindowHelper):
          else:
              alert_received = len(alert_received)
          if alert_received >= self._ctx.getOptions()["threshold"]:
-             #return True
              return True
         else:
           self._ctx.destroy()
