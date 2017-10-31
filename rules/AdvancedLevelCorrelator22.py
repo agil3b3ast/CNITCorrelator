@@ -1,7 +1,7 @@
 from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.idmef import IDMEF
 from preludecorrelator.context import Context
-from preludecorrelator.context import search as context_search
+from preludecorrelator.context import search as ctx_search
 from preludecorrelator.windows.WeakWindowHelper import WeakWindowHelper
 
 LEVEL = 2
