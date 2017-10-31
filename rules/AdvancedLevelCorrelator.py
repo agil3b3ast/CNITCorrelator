@@ -34,7 +34,7 @@ class AdvancedLevelCorrelator(Plugin):
             "alert.correlation_alert.name" : "Layer 2 Correlation",
             "alert.classification.text": "MyFirstAdvancedLevelScan",
             "alert.assessment.impact.severity": "high"}
-            window = self.bindCtxToNewWindow(context_id, options, initial_attrs)
+            window = self.bindCtxToNewWindow(WeakWindowHelper,context_id, options, initial_attrs)
 
         #window = self.getWindowHelper(WeakWindowHelper, context_id)
         window.addIdmef(idmef)

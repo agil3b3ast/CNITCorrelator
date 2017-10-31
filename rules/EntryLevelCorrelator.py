@@ -26,7 +26,7 @@ class EntryLevelCorrelator(Plugin):
          #- expires after 1 seconds of inactivity
          #- generates a correlation alert after 5 msg received
          #- checks for the threshold in a window of 1 second, if the window expires the correlation period restarts
-         window = self.bindCtxToNewWindow(context_id, options, initial_attrs)
+         window = self.bindCtxToNewWindow(WeakWindowHelper, context_id, options, initial_attrs)
         #window = self.getWindowHelper(StrongWindowHelper, context_id)
         window.addIdmef(idmef)
 
