@@ -50,8 +50,9 @@ class StrongWindowHelper(WindowHelper):
         self._timestamps.append([time.time(),idmef, tmp_analyzer])
 
     def corrConditions(self, params=[]):
+        counter = len(self.getAlertsReceivedInWindow())
         print("I am {} : reaching threshold with counter {}".format(self._name, counter))
-        return len(self.getAlertsReceivedInWindow()) >= self._ctx.getOptions()["threshold"]
+        return counter >= self._ctx.getOptions()["threshold"]
 
     def getAlertsReceivedInWindow():
         now = time.time()
