@@ -54,7 +54,7 @@ class StrongWindowHelper(WindowHelper):
         print("I am {} : reaching threshold with counter {}".format(self._name, counter))
         return counter >= self._ctx.getOptions()["threshold"]
 
-    def getAlertsReceivedInWindow():
+    def getAlertsReceivedInWindow(self):
         now = time.time()
         len_timestamps = len(self._timestamps)
         print("I am {} : len timestamps {}".format(self._name, len_timestamps))
