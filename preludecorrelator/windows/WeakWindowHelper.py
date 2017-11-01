@@ -52,7 +52,8 @@ class WeakWindowHelper(WindowHelper):
             self.rst()
         self._ctx.update(options=self._ctx.getOptions(), idmef=idmef, timer_rst=False)
 
-    def _countAlertReceived(self):
+    #def _countAlertReceived(self):
+    def getAlertsReceivedInWindow(self):
      alert_received = self._ctx.get("alert.correlation_alert.alertident(*).analyzerid")
      if alert_received is None:
          alert_received = 0
@@ -60,15 +61,23 @@ class WeakWindowHelper(WindowHelper):
          alert_received = len(alert_received)
      return alert_received
 
+    def corrConditions(self, params={}):
+        alert_received = self.getAlertsReceivedInWindow()
+        print("I am {}, alert received {}".format(self._name, alert_received))
+        return alert_received >= self._ctx.getOptions()["threshold"]
+
     def checkCorrelationWindow(self):
-         alert_received = self._countAlertReceived()
-         print("I am {}, alert received {}".format(self._name, alert_received))
-         return alert_received >= self._ctx.getOptions()["threshold"]
+         #alert_received = self._countAlertReceived()
+         #print("I am {}, alert received {}".format(self._name, alert_received))
+         #return alert_received >= self._ctx.getOptions()["threshold"]
+         return self.corrConditions()
 
-
-    def generateCorrelationAlert(self):
+    def generateCorrelationAlert(self, send=True):
         tmp_ctx = ctx_search(self._name)
         self._ctx.destroy()
         self.unbindContext()
         self.rst()
-        tmp_ctx.alert()
+        if send:
+            tmp_ctx.alert()
+        else:
+            return tmp_ctx
