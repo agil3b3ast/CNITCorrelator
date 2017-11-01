@@ -4,7 +4,7 @@ from preludecorrelator.context import Context
 from preludecorrelator.context import search as ctx_search
 from preludecorrelator.windows.WeakWindowHelper import WeakWindowHelper
 
-LEVEL = 2
+LEVEL = 3
 NUMBER = 1
 print("{}, Layer {} Correlation{}".format("AdvancedLevelCorrelator", LEVEL, NUMBER))
 context_id = "{}Layer{}Correlation{}".format("AdvancedLevelCorrelator", LEVEL, NUMBER)
@@ -16,7 +16,7 @@ class TwoCountersWindowHelper(WeakWindowHelper):
         print("I am {}, alert received {}".format(self._name, alert_received))
         return alert_received >= self._ctx.getOptions()["threshold"]
 
-class AdvancedLevelCorrelator(Plugin):
+class AdvancedLevelCorrelator31(Plugin):
 
     def run(self, idmef):
         corr_name = idmef.get("alert.correlation_alert.name")

@@ -5,7 +5,7 @@ from preludecorrelator.context import search as context_search
 from preludecorrelator.windows.StrongWindowHelper import StrongWindowHelper
 
 LEVEL = 1
-NUMBER = 1
+NUMBER = 2
 print("{}, {} Level Correlation{}".format("EntryLevelCorrelator", LEVEL, NUMBER))
 #The context should be unique, it's better add the class name since we know it's unique
 context_id = "{}Layer{}Correlation{}".format("EntryLevelCorrelator", LEVEL, NUMBER)
@@ -17,7 +17,7 @@ class TwoCountersWindowHelper(StrongWindowHelper):
         print("I am {} : reaching threshold with counter {}".format(self._name, counter))
         return counter >= self._options["threshold"]
 
-class EntryLevelCorrelator(Plugin):
+class EntryLevelCorrelator12(Plugin):
     def run(self, idmef):
         #Receive only simple alerts, not correlation alerts
         if idmef.get("alert.correlation_alert.name") is not None:
