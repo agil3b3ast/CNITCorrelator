@@ -104,7 +104,7 @@ class StrongWindowHelper(WindowHelper):
          #counter = self.getAlertsReceivedInWindow()
          alerts = self.getAlertsReceivedInWindow()
          #for c in range(len_timestamps-1-counter,len_timestamps-1):
-         for a in range(alerts)
+         for a in range(alerts):
              #self._timestamps[c][2].restoreAnalyzerContents(self._timestamps[c][1])
              #self._ctx.update(options=self._options, idmef=self._timestamps[c][1], timer_rst=False)
              self._ctx.update(options=self._options, idmef=a, timer_rst=False)
