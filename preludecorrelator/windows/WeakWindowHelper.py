@@ -26,7 +26,7 @@ class WeakWindowHelper(WindowHelper):
         for key,value in self.initialAttrs.iteritems():
          self._ctx.set(key,value)
 
-    def _restoreContext(options, initial_attrs):
+    def _restoreContext(self, options, initial_attrs):
          self._ctx = Context(self._name, options, update=False)
 
          for key,value in initial_attrs.iteritems():
