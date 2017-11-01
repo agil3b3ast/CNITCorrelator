@@ -2,7 +2,7 @@ from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.idmef import IDMEF
 from preludecorrelator.context import Context
 from preludecorrelator.context import search as context_search
-from preludecorrelator.windows.WeakWindowHelper import WeakWindowHelper
+from preludecorrelator.windows.StrongWindowHelper import StrongWindowHelper
 
 LEVEL = 1
 NUMBER = 0
@@ -16,7 +16,7 @@ class EntryLevelCorrelator(Plugin):
         if idmef.get("alert.correlation_alert.name") is not None:
          return
 
-        window = self.getWindowHelper(WeakWindowHelper, context_id)
+        window = self.getWindowHelper(StrongWindowHelper, context_id)
         if window.isEmpty():
          options = { "expire": 5, "threshold": 5 ,"alert_on_expire": False }
          initial_attrs = {"alert.correlation_alert.name": "Layer {} Correlation".format(LEVEL),"alert.classification.text": "MyFirstEntryLevelScan{}".format(NUMBER),"alert.assessment.impact.severity": "high"}
