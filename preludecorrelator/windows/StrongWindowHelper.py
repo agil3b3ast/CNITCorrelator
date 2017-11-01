@@ -57,12 +57,17 @@ class StrongWindowHelper(WindowHelper):
         now = time.time()
         len_timestamps = len(self._timestamps)
         print("I am {} : len timestamps {}".format(self._name, len_timestamps))
-        counter = 0
+        #counter = 0
+        alerts = []
         for t in range(len_timestamps-1,-1,-1):
             print("I am {} : timestamps[{}] < {}".format(self._name, t, self._options["expire"]))
             if now - self._timestamps[t][0] < self._options["expire"]:
-             counter = counter + 1
-        return counter
+             #counter = counter + 1
+             self._timestamps[t][2].restoreAnalyzerContents(self._timestamps[t][1])
+             alerts.append(self._timestamps[t][1])
+
+        return alerts
+        #return counter
     '''
     def checkCorrelationWindow(self):
 
@@ -96,10 +101,13 @@ class StrongWindowHelper(WindowHelper):
          print("I am {} : threshold reached".format(self._name))
          self._ctx = Context(self._name, self._options, self._initialAttrs)
          len_timestamps = len(self._timestamps)
-         counter = self.getAlertsReceivedInWindow()
-         for c in range(len_timestamps-1-counter,len_timestamps-1):
-             self._timestamps[c][2].restoreAnalyzerContents(self._timestamps[c][1])
-             self._ctx.update(options=self._options, idmef=self._timestamps[c][1], timer_rst=False)
+         #counter = self.getAlertsReceivedInWindow()
+         alerts = self.getAlertsReceivedInWindow()
+         #for c in range(len_timestamps-1-counter,len_timestamps-1):
+         for a in range(alerts)
+             #self._timestamps[c][2].restoreAnalyzerContents(self._timestamps[c][1])
+             #self._ctx.update(options=self._options, idmef=self._timestamps[c][1], timer_rst=False)
+             self._ctx.update(options=self._options, idmef=a, timer_rst=False)
          #self._ctx.destroy()
          #self.unbindContext()
          return True

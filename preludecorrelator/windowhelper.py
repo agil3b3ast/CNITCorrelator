@@ -64,9 +64,6 @@ class WindowHelper(object):
     def unbindContext(self):
         pass
 
-    def getAlertsReceivedInWindow(self):
-        pass
-
     def corrConditions(self, params={}):
         pass
 
