@@ -187,6 +187,7 @@ class PreludeClient(object):
 
             now = time.time()
             if now - last >= 1:
+                print("Context wakeup")
                 context.wakeup(now)
                 last = now
 
