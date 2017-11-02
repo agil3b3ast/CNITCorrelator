@@ -80,25 +80,6 @@ class WindowHolder(object):
         self.addWindowHelper(new_inst)
         return new_inst
 
-    '''
-    def bindWindowHelper(self, class_name, ctx_name):
-        ctx = ctx_search(ctx_name)
-
-        if ctx is None:
-            ctx = Context(context_id, options, update = False)
-            for key, value in initial_attrs.iteritems():
-                ctx.set(key, value)
-
-        new_inst = class_name(context_id, ctx,initial_attrs)
-        self.addWindowHelper(new_inst)
-        return new_inst
-
-        new_inst = class_name(ctx, ctx_name)
-        self.addWindowHelper(new_inst)
-        return new_inst
-    '''
-
-
     def getWindowHelpers(self):
         return self._windowHelpers()
 
