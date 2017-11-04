@@ -103,7 +103,7 @@ class ClientReader(GenericReader):
         while True:
             msg = idmef.IDMEF()
             try:
-                ret = self.prelude_client.client.recvIDMEF(msg, 1000)
+                ret = self.prelude_client.client.recvIDMEF(msg, 100)
             except Exception:
                 ret = None
 
