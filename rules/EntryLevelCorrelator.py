@@ -22,8 +22,12 @@ class EntryLevelCorrelator(Plugin):
         #Receive only simple alerts, not correlation alerts
         if idmef.get("alert.correlation_alert.name") is not None:
          return
+        #ctxHelper = getContextHelper
+
+        #correlator = self.getContextHelper(context_id,TwoCountersWindowHelper)
 
         window = self.getWindowHelper(TwoCountersWindowHelper, context_id)
+
         if window.isEmpty():
          options = { "expire": 5, "threshold": 5 ,"alert_on_expire": False }
          initial_attrs = {"alert.correlation_alert.name": "Layer {} Correlation".format(LEVEL),"alert.classification.text": "MyFirstEntryLevelScan{}".format(NUMBER),"alert.assessment.impact.severity": "high"}
@@ -34,10 +38,12 @@ class EntryLevelCorrelator(Plugin):
          #- checks for the threshold in a window of 1 second, if the window expires the correlation period restarts
          window.bindContext(options, initial_attrs)
 
+        #process idmef
         window.addIdmef(idmef)
-
+        #crea metodo astratto e nell'override chiama checkCorrelationWindow
         if window.checkCorrelationWindow():
           print("Hello from %s" % self.__class__.__name__)
           print(window.getIdmefField("alert.classification.text"))
           window.generateCorrelationAlert()
+          #self.contexts.append(ctx)
           print("%s Alert finished" % self.__class__.__name__)
