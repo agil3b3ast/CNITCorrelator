@@ -2,7 +2,7 @@ from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.idmef import IDMEF
 from preludecorrelator.context import Context
 from preludecorrelator.context import search as context_search
-from preludecorrelator.windows.StrongWindowHelper import StrongWindowHelper
+from preludecorrelator.contexthelpers.StrongWindowHelper import StrongWindowHelper
 
 LEVEL = 1
 NUMBER = 1
@@ -12,7 +12,7 @@ context_id = "{}Layer{}Correlation{}".format("EntryLevelCorrelator", LEVEL, NUMB
 
 class TwoCountersWindowHelper(StrongWindowHelper):
 
-    def corrConditions(self, params={}):
+    def corrConditions(self):
         counter = len(self.getAlertsReceivedInWindow())
         print("I am {} : reaching threshold with counter {}".format(self._name, counter))
         return counter >= self._options["threshold"]
@@ -24,11 +24,12 @@ class EntryLevelCorrelator(Plugin):
          return
         #ctxHelper = getContextHelper
 
-        #correlator = self.getContextHelper(context_id,TwoCountersWindowHelper)
+        correlator = self.getContextHelper(context_id,TwoCountersWindowHelper)
 
-        window = self.getWindowHelper(TwoCountersWindowHelper, context_id)
+        #window = self.getWindowHelper(TwoCountersWindowHelper, context_id)
 
-        if window.isEmpty():
+        #if window.isEmpty():
+        correlator.isEmpty():
          options = { "expire": 5, "threshold": 5 ,"alert_on_expire": False }
          initial_attrs = {"alert.correlation_alert.name": "Layer {} Correlation".format(LEVEL),"alert.classification.text": "MyFirstEntryLevelScan{}".format(NUMBER),"alert.assessment.impact.severity": "high"}
 
@@ -36,14 +37,21 @@ class EntryLevelCorrelator(Plugin):
          #- expires after 1 seconds of inactivity
          #- generates a correlation alert after 5 msg received
          #- checks for the threshold in a window of 1 second, if the window expires the correlation period restarts
-         window.bindContext(options, initial_attrs)
+         #window.bindContext(options, initial_attrs)
+         correlator.bindContext(options, initial_attrs)
 
         #process idmef
-        window.addIdmef(idmef)
+        #window.addIdmef(idmef)
+        correlator.addIdmef(idmef)
+
         #crea metodo astratto e nell'override chiama checkCorrelationWindow
-        if window.checkCorrelationWindow():
+        #if window.checkCorrelationWindow():
+        correlator.checkCorrelation():
           print("Hello from %s" % self.__class__.__name__)
-          print(window.getIdmefField("alert.classification.text"))
-          window.generateCorrelationAlert()
+          #print(window.getIdmefField("alert.classification.text"))
+          print(correlator.getIdmefField("alert.classification.text"))
+
+          #window.generateCorrelationAlert()
+          correlator.generateCorrelationAlert()
           #self.contexts.append(ctx)
           print("%s Alert finished" % self.__class__.__name__)
