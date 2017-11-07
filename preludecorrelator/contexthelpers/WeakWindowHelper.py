@@ -1,9 +1,9 @@
 import time
-from ..windowhelper import WindowHelper
+from ..contexthelper import ContextHelper
 from..context import Context
 from ..context import search as ctx_search
 
-class WeakWindowHelper(WindowHelper):
+class WeakWindowHelper(ContextHelper):
 
 
     def __init__(self, name):
@@ -67,7 +67,10 @@ class WeakWindowHelper(WindowHelper):
         print("I am {}, alert received {}".format(self._name, alert_received))
         return alert_received >= self._ctx.getOptions()["threshold"]
 
-    def checkCorrelationWindow(self):
+    def checkCorrelation(self):
+        return self._checkCorrelationWindow()
+
+    def _checkCorrelationWindow(self):
          #alert_received = self._countAlertReceived()
          #print("I am {}, alert received {}".format(self._name, alert_received))
          #return alert_received >= self._ctx.getOptions()["threshold"]
