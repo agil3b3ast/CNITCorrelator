@@ -46,6 +46,15 @@ class WeakWindowHelper(ContextHelper):
     def rst(self):
         self._origTime = time.time()
 
+    def processIdmef(self, idmef=None):
+        if self._ctx.getOptions["reset_ctx_on_window_expiration"]:
+            now = time.time()
+            if now - self._origTime >= self._ctx.getOptions()["window"]:
+                self._ctx.destroy()
+                self._restoreContext(self._options, self._initialAttrs)
+                self.rst()
+        self._ctx.update(options=self._ctx.getOptions(), idmef=idmef, timer_rst=True)
+    '''
     def addIdmef(self, idmef):
         now = time.time()
         if now - self._origTime >= self._ctx.getOptions()["expire"]:
@@ -53,7 +62,7 @@ class WeakWindowHelper(ContextHelper):
             self._restoreContext(self._options, self._initialAttrs)
             self.rst()
         self._ctx.update(options=self._ctx.getOptions(), idmef=idmef, timer_rst=False)
-
+    '''
     '''
     def countAlertsReceivedInWindow(self):
      alert_received = self._ctx.get("alert.correlation_alert.alertident(*).analyzerid")
@@ -65,7 +74,7 @@ class WeakWindowHelper(ContextHelper):
     '''
     def countAlertsReceivedInWindow(self):
         return self._ctx.getUpdateCount()
-    
+
     def corrConditions(self):
         alert_received = self.countAlertsReceivedInWindow()
         print("I am {}, alert received {}".format(self._name, alert_received))

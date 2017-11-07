@@ -30,19 +30,22 @@ class EntryLevelCorrelator(Plugin):
 
         #if window.isEmpty():
         correlator.isEmpty():
-         options = { "expire": 5, "threshold": 5 ,"alert_on_expire": False }
+         options = { "expire": 5, "threshold": 5 ,"alert_on_expire": False, "window": 5, "reset_ctx_on_window_expiration": True }
          initial_attrs = {"alert.correlation_alert.name": "Layer {} Correlation".format(LEVEL),"alert.classification.text": "MyFirstEntryLevelScan{}".format(NUMBER),"alert.assessment.impact.severity": "high"}
 
          #Create a context that:
-         #- expires after 1 seconds of inactivity
+         #- expires after 5 seconds of inactivity
          #- generates a correlation alert after 5 msg received
-         #- checks for the threshold in a window of 1 second, if the window expires the correlation period restarts
+         #- checks for the threshold in a window of 5 second, if the window expires the correlation period restarts
          #window.bindContext(options, initial_attrs)
          correlator.bindContext(options, initial_attrs)
 
+        #get options e set options devono essere per forza di un contesto
+
         #process idmef
         #window.addIdmef(idmef)
-        correlator.addIdmef(idmef)
+        #correlator.addIdmef(idmef)
+        correlator.update(idmef=idmef)
 
         #crea metodo astratto e nell'override chiama checkCorrelationWindow
         #if window.checkCorrelationWindow():
@@ -52,6 +55,6 @@ class EntryLevelCorrelator(Plugin):
           print(correlator.getIdmefField("alert.classification.text"))
 
           #window.generateCorrelationAlert()
-          correlator.generateCorrelationAlert()
+          correlator.generateCorrelationAlert(send=True)
           #self.contexts.append(ctx)
           print("%s Alert finished" % self.__class__.__name__)

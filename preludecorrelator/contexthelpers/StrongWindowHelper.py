@@ -43,7 +43,7 @@ class StrongWindowHelper(ContextHelper):
     def rst(self):
         self._timestamps = []
 
-    def update(self, idmef=None):
+    def processIdmef(self, idmef=None):
         now = time.time()
         len_timestamps = len(self._timestamps)
         for t in range(len_timestamps-1,-1,-1):
@@ -56,7 +56,7 @@ class StrongWindowHelper(ContextHelper):
             tmp_analyzer.saveAnalyzerContents(idmef)
 
         self._timestamps.append([time.time(),idmef, tmp_analyzer])
-
+    '''
     def addIdmef(self, idmef):
         now = time.time()
         len_timestamps = len(self._timestamps)
@@ -67,6 +67,7 @@ class StrongWindowHelper(ContextHelper):
         tmp_analyzer = AnalyzerContents()
         tmp_analyzer.saveAnalyzerContents(idmef)
         self._timestamps.append([time.time(),idmef, tmp_analyzer])
+    '''
 
     def corrConditions(self):
         counter = len(self.getAlertsReceivedInWindow())
