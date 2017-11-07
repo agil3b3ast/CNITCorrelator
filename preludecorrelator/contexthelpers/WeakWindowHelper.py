@@ -54,6 +54,7 @@ class WeakWindowHelper(ContextHelper):
             self.rst()
         self._ctx.update(options=self._ctx.getOptions(), idmef=idmef, timer_rst=False)
 
+    '''
     def countAlertsReceivedInWindow(self):
      alert_received = self._ctx.get("alert.correlation_alert.alertident(*).analyzerid")
      if alert_received is None:
@@ -61,7 +62,10 @@ class WeakWindowHelper(ContextHelper):
      else:
          alert_received = len(alert_received)
      return alert_received
-
+    '''
+    def countAlertsReceivedInWindow(self):
+        return self._ctx.getUpdateCount()
+    
     def corrConditions(self):
         alert_received = self.countAlertsReceivedInWindow()
         print("I am {}, alert received {}".format(self._name, alert_received))
