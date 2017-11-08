@@ -100,7 +100,7 @@ class WeakWindowHelper(ContextHelper):
 
     def generateCorrelationAlert(self, send=True, destroy_ctx=False):
         tmp_ctx = ctx_search(self._name)
-        if destroy:
+        if destroy_ctx:
             self._ctx.destroy()
             self.unbindContext()
         self.rst()
