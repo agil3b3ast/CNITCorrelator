@@ -76,7 +76,7 @@ class StrongWindowHelper(ContextHelper):
     def corrConditions(self):
         counter = len(self.getAlertsReceivedInWindow())
         print("I am {} : reaching threshold with counter {}".format(self._name, counter))
-        return counter >= self._options["threshold"]
+        return counter >= self._ctx.getOptions()["threshold"]
 
     def getAlertsReceivedInWindow(self):
         now = time.time()
@@ -102,7 +102,7 @@ class StrongWindowHelper(ContextHelper):
 
          alerts = self.getAlertsReceivedInWindow()
          for a in reversed(alerts):
-             self._ctx.update(options=self._options, idmef=a, timer_rst=False)
+             self._ctx.update(options=self._ctx.getOptions(), idmef=a, timer_rst=False)
          return True
      return False
 
