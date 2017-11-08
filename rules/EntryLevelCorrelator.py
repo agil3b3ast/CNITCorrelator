@@ -29,7 +29,7 @@ class EntryLevelCorrelator(Plugin):
         #window = self.getWindowHelper(TwoCountersWindowHelper, context_id)
 
         #if window.isEmpty():
-        correlator.isEmpty():
+        if correlator.isEmpty():
          options = { "expire": 5, "threshold": 5 ,"alert_on_expire": False, "window": 5}
          initial_attrs = {"alert.correlation_alert.name": "Layer {} Correlation".format(LEVEL),"alert.classification.text": "MyFirstEntryLevelScan{}".format(NUMBER),"alert.assessment.impact.severity": "high"}
 
