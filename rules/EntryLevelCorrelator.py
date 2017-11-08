@@ -22,13 +22,10 @@ class EntryLevelCorrelator(Plugin):
         #Receive only simple alerts, not correlation alerts
         if idmef.get("alert.correlation_alert.name") is not None:
          return
-        #ctxHelper = getContextHelper
 
         correlator = self.getContextHelper(context_id,TwoCountersWindowHelper)
 
-        #window = self.getWindowHelper(TwoCountersWindowHelper, context_id)
 
-        #if window.isEmpty():
         if correlator.isEmpty():
          options = { "expire": 5, "threshold": 5 ,"alert_on_expire": False, "window": 5}
          initial_attrs = {"alert.correlation_alert.name": "Layer {} Correlation".format(LEVEL),"alert.classification.text": "MyFirstEntryLevelScan{}".format(NUMBER),"alert.assessment.impact.severity": "high"}
@@ -37,23 +34,13 @@ class EntryLevelCorrelator(Plugin):
          #- expires after 5 seconds of inactivity
          #- generates a correlation alert after 5 msg received
          #- checks for the threshold in a window of 5 second, if the window expires the correlation period restarts
-         #window.bindContext(options, initial_attrs)
          correlator.bindContext(options, initial_attrs)
 
-        #get options e set options devono essere per forza di un contesto
-        #quando ci sta window expiration prendo il campo options che non viene mai modificato e lo setto nel ctx
-        #process idmef
-        #window.addIdmef(idmef)
-        #correlator.addIdmef(idmef)
+
         correlator.processIdmef(idmef=idmef, addAlertReference=True)
 
-        #crea metodo astratto e nell'override chiama checkCorrelationWindow
-        #if window.checkCorrelationWindow():
         if correlator.checkCorrelation():
           print("Hello from %s" % self.__class__.__name__)
-          #print(window.getIdmefField("alert.classification.text"))
           print(correlator.getIdmefField("alert.classification.text"))
-          #window.generateCorrelationAlert()
           correlator.generateCorrelationAlert(send=True, destroy_ctx=False)
-          #self.contexts.append(ctx)
           print("%s Alert finished" % self.__class__.__name__)

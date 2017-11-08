@@ -215,27 +215,27 @@ class PluginManager(object):
         for plugin in self.getPluginsInstancesList():
             try:
                 if len(self._active_plugins) == 0:
-                 print("adding "+ plugin._getName())
+                 #print("adding "+ plugin._getName())
                  self._active_plugins.append(plugin._getName())
-                 print(self._active_plugins)
+                 #print(self._active_plugins)
                  tmp_analyzer = AnalyzerContents()
                  tmp_analyzer.saveAnalyzerContents(idmef)
                  plugin.run(idmef)
                  tmp_analyzer.restoreAnalyzerContents(idmef)
-                 print("removing "+ plugin._getName())
+                 #print("removing "+ plugin._getName())
                  self._active_plugins.pop()
-                 print(self._active_plugins)
+                 #print(self._active_plugins)
                 else:
                  if plugin._getName() != self._active_plugins[-1]:
                   self._active_plugins.append([plugin._getName()])
-                  print(self._active_plugins)
+                  #print(self._active_plugins)
                   tmp_analyzer = AnalyzerContents()
                   tmp_analyzer.saveAnalyzerContents(idmef)
                   plugin.run(idmef)
                   tmp_analyzer.restoreAnalyzerContents(idmef)
-                  print("removing "+ plugin._getName())
+                  #print("removing "+ plugin._getName())
                   self._active_plugins.pop()
-                  print(self._active_plugins)
+                  #print(self._active_plugins)
             except error.UserError as e:
                 logger.error("[%s]: error running plugin : %s", plugin._getName(), e)
 
