@@ -47,12 +47,14 @@ class WeakWindowHelper(ContextHelper):
         self._origTime = time.time()
 
     def processIdmef(self, idmef=None):
-        if self._ctx.getOptions["reset_ctx_on_window_expiration"]:
-            now = time.time()
-            if now - self._origTime >= self._ctx.getOptions()["window"]:
+        now = time.time()
+        if now - self._origTime >= self._ctx.getOptions()["window"]:
+            if self._ctx.getOptions["reset_ctx_on_window_expiration"]:
                 self._ctx.destroy()
                 self._restoreContext(self._options, self._initialAttrs)
-                self.rst()
+            else:
+                self._ctx.resetCount()
+            self.rst()
         self._ctx.update(options=self._ctx.getOptions(), idmef=idmef, timer_rst=True)
     '''
     def addIdmef(self, idmef):
@@ -91,8 +93,9 @@ class WeakWindowHelper(ContextHelper):
 
     def generateCorrelationAlert(self, send=True):
         tmp_ctx = ctx_search(self._name)
-        self._ctx.destroy()
-        self.unbindContext()
+        if self._ctx.getOptions["reset_ctx_on_window_expiration"]:
+            self._ctx.destroy()
+            self.unbindContext()
         self.rst()
         if send:
             tmp_ctx.alert()

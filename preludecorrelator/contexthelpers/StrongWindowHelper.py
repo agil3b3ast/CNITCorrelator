@@ -43,19 +43,28 @@ class StrongWindowHelper(ContextHelper):
     def rst(self):
         self._timestamps = []
 
-    def processIdmef(self, idmef=None):
+    def onTimestampDeletion(self):
+        pass
+
+    def onTimestampAppend(self, idmef):
+        pass
+
+    def processIdmef(self, idmef, addAlertReference=True):
         now = time.time()
         len_timestamps = len(self._timestamps)
         for t in range(len_timestamps-1,-1,-1):
             if now - self._timestamps[t][0] >= self._options["expire"]:
                print("I am {} : del timestamps[{}]".format(self._name, t))
                self._timestamps.pop(t)
-        tmp_analyzer = None
-        if idmef is not None:
+               self.onTimestampDeletion()
+
+        if addAlertReference:
             tmp_analyzer = AnalyzerContents()
             tmp_analyzer.saveAnalyzerContents(idmef)
-
-        self._timestamps.append([time.time(),idmef, tmp_analyzer])
+            self._timestamps.append([now,idmef, tmp_analyzer])
+        else:
+            self._timestamps.append([now, None, None])
+        self.onTimestampAppend(idmef)
     '''
     def addIdmef(self, idmef):
         now = time.time()
@@ -94,6 +103,18 @@ class StrongWindowHelper(ContextHelper):
     def _checkCorrelationWindow(self):
      if self.corrConditions():
          print("I am {} : threshold reached".format(self._name))
+
+         alerts = self.getAlertsReceivedInWindow()
+         for a in reversed(alerts):
+             self._ctx.update(options=self._options, idmef=a, timer_rst=False)
+         return True
+     return False
+
+
+'''
+    def _checkCorrelationWindow(self):
+     if self.corrConditions():
+         print("I am {} : threshold reached".format(self._name))
          self._ctx = Context(self._name, self._options, self._initialAttrs)
          for key, value in self._initialAttrs.iteritems():
              self._ctx.set(key,value)
@@ -103,6 +124,7 @@ class StrongWindowHelper(ContextHelper):
              self._ctx.update(options=self._options, idmef=a, timer_rst=False)
          return True
      return False
+'''
 
     def generateCorrelationAlert(self, send=True):
         tmp_ctx = ctx_search(self._name)
