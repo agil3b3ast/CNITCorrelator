@@ -49,7 +49,7 @@ class EntryLevelCorrelator(Plugin):
 
         #crea metodo astratto e nell'override chiama checkCorrelationWindow
         #if window.checkCorrelationWindow():
-        correlator.checkCorrelation():
+        if correlator.checkCorrelation():
           print("Hello from %s" % self.__class__.__name__)
           #print(window.getIdmefField("alert.classification.text"))
           print(correlator.getIdmefField("alert.classification.text"))
