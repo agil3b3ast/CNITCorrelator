@@ -45,7 +45,7 @@ class EntryLevelCorrelator(Plugin):
         #process idmef
         #window.addIdmef(idmef)
         #correlator.addIdmef(idmef)
-        correlator.update(idmef=idmef)
+        correlator.processIdmef(idmef=idmef, addAlertReference=True)
 
         #crea metodo astratto e nell'override chiama checkCorrelationWindow
         #if window.checkCorrelationWindow():
