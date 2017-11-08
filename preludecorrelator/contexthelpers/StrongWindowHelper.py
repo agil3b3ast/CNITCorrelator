@@ -50,7 +50,7 @@ class StrongWindowHelper(ContextHelper):
         now = time.time()
         len_timestamps = len(self._timestamps)
         for t in range(len_timestamps-1,-1,-1):
-            if now - self._timestamps[t][0] >= self.ctx.getOptions()["window"]:
+            if now - self._timestamps[t][0] >= self._ctx.getOptions()["window"]:
                print("I am {} : del timestamps[{}]".format(self._name, t))
                #self._timestamps[t][2].restoreAnalyzerContents(self._timestamps[t][1])
                #self.onIdmefRemoval(self._timestamps[t][1])
