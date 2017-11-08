@@ -43,10 +43,10 @@ class StrongWindowHelper(ContextHelper):
     def rst(self):
         self._timestamps = []
 
-    def onTimestampDeletion(self):
+    def onIdmefAddition(self, idmef):
         pass
 
-    def onTimestampAppend(self, idmef):
+    def onIdmefRemoval(self, idmef):
         pass
 
     def processIdmef(self, idmef, addAlertReference=True):
@@ -55,16 +55,14 @@ class StrongWindowHelper(ContextHelper):
         for t in range(len_timestamps-1,-1,-1):
             if now - self._timestamps[t][0] >= self._options["expire"]:
                print("I am {} : del timestamps[{}]".format(self._name, t))
+               self._timestamps[t][2].restoreAnalyzerContents(self._timestamps[t][1])
+               self.onIdmefRemoval(self._timestamps[t][1])
                self._timestamps.pop(t)
-               self.onTimestampDeletion()
 
-        if addAlertReference:
-            tmp_analyzer = AnalyzerContents()
-            tmp_analyzer.saveAnalyzerContents(idmef)
-            self._timestamps.append([now,idmef, tmp_analyzer])
-        else:
-            self._timestamps.append([now, None, None])
-        self.onTimestampAppend(idmef)
+        tmp_analyzer = AnalyzerContents()
+        tmp_analyzer.saveAnalyzerContents(idmef)
+        self._timestamps.append([now, idmef, tmp_analyzer, addAlertReference])
+        self.onIdmefAddition(idmef)
     '''
     def addIdmef(self, idmef):
         now = time.time()

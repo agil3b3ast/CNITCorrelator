@@ -46,7 +46,7 @@ class WeakWindowHelper(ContextHelper):
     def rst(self):
         self._origTime = time.time()
 
-    def processIdmef(self, idmef=None):
+    def processIdmef(self, idmef, addAlertReference=True):
         now = time.time()
         if now - self._origTime >= self._ctx.getOptions()["window"]:
             if self._ctx.getOptions["reset_ctx_on_window_expiration"]:
@@ -55,7 +55,11 @@ class WeakWindowHelper(ContextHelper):
             else:
                 self._ctx.resetCount()
             self.rst()
-        self._ctx.update(options=self._ctx.getOptions(), idmef=idmef, timer_rst=True)
+        if addAlertReference:
+            self._ctx.update(options=self._ctx.getOptions(), idmef=idmef, timer_rst=True)
+        else:
+            self._ctx.update(options=self._ctx.getOptions(), idmef=None, timer_rst=True)
+
     '''
     def addIdmef(self, idmef):
         now = time.time()
