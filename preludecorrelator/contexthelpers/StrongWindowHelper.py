@@ -122,7 +122,7 @@ class StrongWindowHelper(ContextHelper):
          return False
     '''
 
-    def generateCorrelationAlert(self, send=True, destroy=False):
+    def generateCorrelationAlert(self, send=True, destroy_ctx=False):
         tmp_ctx = ctx_search(self._name)
         if destroy:
          self._ctx.destroy()

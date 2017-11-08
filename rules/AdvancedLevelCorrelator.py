@@ -57,6 +57,6 @@ class AdvancedLevelCorrelator(Plugin):
           #print(window.getIdmefField("alert.classification.text"))
           print(correlator.getIdmefField("alert.classification.text"))
           #window.generateCorrelationAlert()
-          correlator.generateCorrelationAlert(send=True, destroy=True)
+          correlator.generateCorrelationAlert(send=True, destroy_ctx=True)
 
           print("Alert Finished %s" % self.__class__.__name__)
