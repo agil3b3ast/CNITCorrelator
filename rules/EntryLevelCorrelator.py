@@ -33,7 +33,7 @@ class EntryLevelCorrelator(Plugin):
          #Create a context that:
          #- expires after 5 seconds of inactivity
          #- generates a correlation alert after 5 msg received
-         #- checks for the threshold in a window of 5 second, if the window expires the correlation period restarts
+         #- checks for the threshold in a window of 5 seconds
          correlator.bindContext(options, initial_attrs)
 
 
