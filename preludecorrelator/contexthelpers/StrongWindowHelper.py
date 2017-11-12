@@ -42,6 +42,7 @@ class StrongWindowHelper(ContextHelper):
         self._timestamps = []
 
     def processIdmef(self, idmef, addAlertReference=True):
+        self._ctx.update()
         now = time.time()
         len_timestamps = len(self._timestamps)
         for t in range(len_timestamps-1,-1,-1):
