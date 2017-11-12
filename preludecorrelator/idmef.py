@@ -235,6 +235,11 @@ def set_prelude_client(client):
     global prelude_client
     prelude_client = client
 
+def copyIdmef(idmef):
+    idmef_copy = IDMEF()
+    idmef_copy.set("alert", idmef.get("alert"))
+    return idmef_copy
+
 class IDMEFCache(object):
 
     def cacheIdmef(idmef):
