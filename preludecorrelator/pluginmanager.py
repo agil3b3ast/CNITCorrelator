@@ -22,7 +22,7 @@ import os
 import imp
 
 from preludecorrelator import log, error, require, plugins
-from preludecorrelator.idmef import AnalyzerContents
+from preludecorrelator.idmef import AnalyzerContents, copyIdmef
 from preludecorrelator.contexthelper import ContextHelperHolder
 
 logger = log.getLogger(__name__)
@@ -214,14 +214,18 @@ class PluginManager(object):
     def run(self, idmef):
         for plugin in self.getPluginsInstancesList():
             try:
+                idmef_copy = copyIdmef(idmef)
                 if len(self._active_plugins) == 0:
                  #print("adding "+ plugin._getName())
                  self._active_plugins.append(plugin._getName())
                  #print(self._active_plugins)
-                 tmp_analyzer = AnalyzerContents()
-                 tmp_analyzer.saveAnalyzerContents(idmef)
-                 plugin.run(idmef)
-                 tmp_analyzer.restoreAnalyzerContents(idmef)
+
+                 #tmp_analyzer = AnalyzerContents()
+                 #tmp_analyzer.saveAnalyzerContents(idmef)
+
+                 plugin.run(idmef_copy)
+                 #tmp_analyzer.restoreAnalyzerContents(idmef)
+
                  #print("removing "+ plugin._getName())
                  self._active_plugins.pop()
                  #print(self._active_plugins)
@@ -229,10 +233,14 @@ class PluginManager(object):
                  if plugin._getName() != self._active_plugins[-1]:
                   self._active_plugins.append([plugin._getName()])
                   #print(self._active_plugins)
-                  tmp_analyzer = AnalyzerContents()
-                  tmp_analyzer.saveAnalyzerContents(idmef)
-                  plugin.run(idmef)
-                  tmp_analyzer.restoreAnalyzerContents(idmef)
+
+                  #tmp_analyzer = AnalyzerContents()
+                  #tmp_analyzer.saveAnalyzerContents(idmef)
+
+                  plugin.run(idmef_copy)
+
+                  #tmp_analyzer.restoreAnalyzerContents(idmef)
+
                   #print("removing "+ plugin._getName())
                   self._active_plugins.pop()
                   #print(self._active_plugins)
