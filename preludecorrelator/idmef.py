@@ -237,6 +237,7 @@ def set_prelude_client(client):
 
 def copyIdmef(idmef):
     idmef_copy = IDMEF()
+    idmef_copy.set("version", idmef.get("version"))
     idmef_copy.set("alert", idmef.get("alert"))
     return idmef_copy
 
