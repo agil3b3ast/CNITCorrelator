@@ -16,7 +16,7 @@ class ExtendedWindowHelper(WeakWindowHelper):
 class AdvancedLevelCorrelator(Plugin):
 
     def __init__(self, env):
-        super(AdvancedLevelCorrelator, self).__init__()
+        super(AdvancedLevelCorrelator, self).__init__(env)
         logger.info("Loading %s", self.__class__.__name__)
 
     def run(self, idmef):

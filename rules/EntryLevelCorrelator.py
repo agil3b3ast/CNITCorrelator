@@ -18,7 +18,7 @@ class ExtendedStrongWindowHelper(StrongWindowHelper):
 class EntryLevelCorrelator(Plugin):
 
     def __init__(self, env):
-        super(EntryLevelCorrelator, self).__init__()
+        super(EntryLevelCorrelator, self).__init__(env)
         logger.info("Loading %s", self.__class__.__name__)
 
     def run(self, idmef):
