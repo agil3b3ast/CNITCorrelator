@@ -5,6 +5,7 @@ LEVEL = 1
 NUMBER = 1
 #The context should be unique, it's better add the class name since we know it's unique
 context_id = "{}Layer{}Correlation{}".format("EntryLevelCorrelator", LEVEL, NUMBER)
+logger = log.getLogger(__name__)
 
 class ExtendedStrongWindowHelper(StrongWindowHelper):
 
