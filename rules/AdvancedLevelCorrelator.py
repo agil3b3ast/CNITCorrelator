@@ -1,5 +1,6 @@
 from preludecorrelator.pluginmanager import Plugin
 from preludecorrelator.contexthelpers.WeakWindowHelper import WeakWindowHelper
+from preludecorrelator import log
 
 LEVEL = 2
 NUMBER = 1
