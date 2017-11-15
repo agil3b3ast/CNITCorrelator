@@ -13,7 +13,7 @@ class WeakWindowHelper(ContextHelper):
         super(WeakWindowHelper, self).__init__(name)
         self._origTime = time.time()
         self._received = 0
-
+        self._alreadySent = False
 
     def isEmpty(self):
         return ctx_search(self._name) is None
@@ -25,6 +25,7 @@ class WeakWindowHelper(ContextHelper):
          self._ctx = Context(self._name, options, update=False)
          self._origTime = time.time()
          self._received = 0
+         self._alreadySent = False
         else:
          self._ctx = res
         self._options = options
@@ -51,10 +52,15 @@ class WeakWindowHelper(ContextHelper):
     def rst(self):
         self._origTime = time.time()
         self._received = 0
+        self._alreadySent = False
 
     def processIdmef(self, idmef, addAlertReference=True):
-        self._received = self._received + 1
         now = time.time()
+        in_window = now - self._origTime < self._ctx.getOptions()["window"]
+        if self._ctx.getOptions()["check_burst"] and in_window and self._alreadySent:
+            return
+            
+        self._received = self._received + 1
         if now - self._origTime >= self._ctx.getOptions()["window"]:
             if self._ctx.getOptions()["reset_ctx_on_window_expiration"]:
                 self._ctx.destroy()
